@@ -6,6 +6,7 @@ export const WrapperHeader = styled(Row)`
     background-color: #fff;
     border-bottom: 1px solid #000;
     align-items: center;
+    z-index:999;
 `
 export const WrapperHeaderLogo = styled.div`
     font-size: 3rem;
@@ -13,6 +14,6 @@ export const WrapperHeaderLogo = styled.div`
     text-align: center;
 `
 export const WrapperHeaderSSU = styled.div`
-    text-align: right;
-
+    justify-content: flex-end;
+    display: flex;
 `
