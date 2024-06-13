@@ -8,7 +8,7 @@ const FooterComponent = () => {
         <WrapperFooter >
             <Col  span={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
                 
-                <div class="col-inner" style={{marginBottom:'108px'}}>
+                <div class="col-inner" style={{marginBottom:'114px'}}>
                     <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}} >ABOUT US</h2>
                     <div class="footer-content">
                         <p class="text-uppercase" ><a href="" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>ABOUT US</a></p>
@@ -17,7 +17,7 @@ const FooterComponent = () => {
                 
             </Col>
             <Col  span={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
-                <div class="col-inner" style={{marginBottom:'108px'}}>
+                <div class="col-inner" style={{marginBottom:'114px'}}>
                     <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>INFORMATION</h2>
                     <div class="footer-content">
                         <p class="text-uppercase" ><a href="" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>CLIENT SERVICE</a></p>

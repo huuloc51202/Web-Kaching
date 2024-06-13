@@ -5,7 +5,7 @@ export const WrapperFooter = styled(Row)`
     background-color: #000;
     border-bottom: 1px solid #000;
     align-items: center;
-    z-index:999;
+    width:100%;
 `
 
 

@@ -7,6 +7,9 @@ export const WrapperHeader = styled(Row)`
     border-bottom: 1px solid #000;
     align-items: center;
     z-index:999;
+    width:100%;
+    position:fixed;
+    top:0;
 `
 export const WrapperHeaderLogo = styled.div`
     font-size: 3rem;
