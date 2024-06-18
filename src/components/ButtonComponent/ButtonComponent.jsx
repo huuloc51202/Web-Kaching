@@ -4,10 +4,10 @@ import React from 'react'
 const ButtonComponent = ({styleTextButton,textButton, ...rests}) => {
   return (
     <Button  
-        // icon={<SearchOutlined />}
         
         
-        {...rests}
+        
+      {...rests}
     ><span style={styleTextButton}>{textButton}</span></Button>
   )
 }

@@ -2,12 +2,3 @@
 .leftt-filter:hover .filter-arrange {
     display: block;
 }
-
-.filter-arrange{
-    display: none;
-}
-
-.filter-arrange-a:hover {
-   background-color: #000;
-   color:#fff ;
-}

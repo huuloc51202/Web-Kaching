@@ -14,6 +14,7 @@ export const Contauner = styled.div`
 export const LefttFilter = styled.div`
     width: 180px;
     position: relative;
+    
 `
 
 export const ArrangeTitle = styled.div`
@@ -35,7 +36,7 @@ export const FilterArrange = styled.div`
     border:1px solid #000;
     min-width: 178px;
     top: 36px;
-    
+    display: none;
     
 `
 
@@ -47,4 +48,8 @@ export const FilterArrangeA = styled.a`
     font-size:1.4rem;
     cursor: pointer;
     color:#000;
+    &:hover {
+        background-color: #000;
+        color:#fff ;
+    }
 `

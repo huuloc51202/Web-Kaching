@@ -10,13 +10,16 @@ export const WrapperHeader = styled(Row)`
     width:100%;
     position:fixed;
     top:0;
+    
 `
 export const WrapperHeaderLogo = styled.div`
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
 `
 export const WrapperHeaderSSU = styled.div`
     justify-content: flex-end;
     display: flex;
+    
 `

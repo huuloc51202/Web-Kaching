@@ -244,8 +244,57 @@ const CardComponent = ({arrImages}) => {
         </WrapperCard>
 
       </Col>
+
+      <Col span={6}>
+        <WrapperCard
+          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
+        
+        >
+          
+          <Slider  {...settings}>
+            
+            {arrImages.map((image, index) => (
+              <div key={index} >
+                <img src={image} alt={`slider-${index}`} preview={false} />
+              </div>
+            ))}
+            
+          </Slider>
+          
+          <ProContent>
+            
+            <a href="" style={{
+              color:'#000',
+              verflow: 'hidden',
+              display: '-webkit-box',
+              textOverflow: 'ellipsis',
+              height: '55px',
+              textTransform: 'uppercase',
+              
+              }}
+            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
+            <div className="prd-price-box">
+
+              <span className="prd-price">550,000đ</span>
+            </div>
+          </ProContent>
+          <ItemSoldOut>
+            <span style={{
+              background: '#000',
+              color: '#fffef9',
+              textTransform: 'uppercase',
+              fontSize: '13px !important',
+              width: '100%',
+              padding: '10px 20px',
+              // display:'none'
+              
+            }}>SOLD OUT</span>
+          </ItemSoldOut>
+        </WrapperCard>
+
+      </Col>
+      
     </Row>
-    
     
 
         

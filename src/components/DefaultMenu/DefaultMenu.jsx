@@ -7,10 +7,11 @@ const DefaultMenu = () => {
     <div >
         <MenuHeader style={{
             position: 'absolute',
-            width: '1680px',top: '39px',
+            width: '1665px',
+            top: '39px',
             left: '-15px' , 
             textAlign:'center', 
-            display:'none', 
+            // display:'none', 
             zIndex:'999',
             backgroundColor: '#fff'
             }}>

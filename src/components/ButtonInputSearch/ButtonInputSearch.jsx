@@ -7,8 +7,9 @@ import InputComponent from '../InputComponent/InputComponent';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const ButtonInputSearch = (props) => {
-    const { placeholder, textButton , } = props
-    return (
+  
+  const { placeholder, textButton , } = props
+  return (
     <div style={{
         display:'flex' , 
         border:'1px solid #000', 
@@ -19,7 +20,7 @@ const ButtonInputSearch = (props) => {
         textAlign:'center', 
         zIndex:'999',
         backgroundColor: '#fff',
-        display:'none'
+        // display:'none'
       }}>
       <ButtonComponent
         textButton = {textButton}
