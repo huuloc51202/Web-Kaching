@@ -18,7 +18,8 @@ export const FormLogin = styled.input`
     font-size: 1.5rem;
     padding: 10px;
     width:100%;
-    outline:none
+    outline:none;
+    box-sizing: border-box;
 `
 
 export const Btn = styled.button`
@@ -33,6 +34,11 @@ export const Btn = styled.button`
     padding:6px 12px;
     margin: 0 0 10px;
     line-height: 1.5;
+    &:disabled{
+        background-color: #ccc;
+        cursor: not-allowed;
+        color: #666;
+    }
 `
 
 export const ClearFixA = styled.a`

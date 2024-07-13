@@ -23,3 +23,11 @@ export const WrapperHeaderSSU = styled.div`
     display: flex;
     
 `
+
+export const WrapperContentPopup = styled.p`
+    cursor: pointer;
+    text-align: center;
+    &:hover {
+        color: #ccc;
+    }
+`

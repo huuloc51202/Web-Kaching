@@ -12,13 +12,14 @@ export const UserWrapper = styled.div`
     padding:20px;
 `
 
-export const FormLogin = styled.input`
+export const FormSignUp = styled.input`
     border: 1px solid #f7f7f7;
     border-radius: .15rem;
     font-size: 1.5rem;
     padding: 10px;
     width:100%;
-    outline:none
+    outline:none;
+    box-sizing: border-box;
 `
 
 export const Btn = styled.button`
@@ -33,6 +34,11 @@ export const Btn = styled.button`
     padding:6px 12px;
     margin: 0 0 10px;
     line-height: 1.5;
+    &:disabled{
+        background-color: #ccc;
+        cursor: not-allowed;
+        color: #666;
+    }
 `
 
 export const ClearFixA = styled.a`

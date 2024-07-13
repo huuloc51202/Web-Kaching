@@ -55,7 +55,7 @@ const CartPage = () => {
                                         <div id="pro-table">
                                             <TableHeading className="table-heading">
                                                 <TableShare className="table-share table-product" style={{width: '392px'}}>
-                                                    <a href="" style={{textDecoration:'none'}}>
+                                                    <a  style={{textDecoration:'none'}}>
                                                         <div className="thumb-cart" style={{display:'flex'}}>
                                                             <img src={prod1} alt="" style={{width : '150px' ,marginRight: '15px'}}/>
                                                             <div className="thumb-cart__item" style={{width : '125px' }}>
@@ -95,7 +95,7 @@ const CartPage = () => {
 
                                             <TableHeading className="table-heading">
                                                 <TableShare className="table-share table-product" style={{width: '392px'}}>
-                                                    <a href="" style={{textDecoration:'none'}}>
+                                                    <a  style={{textDecoration:'none'}}>
                                                         <div className="thumb-cart" style={{display:'flex'}}>
                                                             <img src={prod1} alt="" style={{width : '150px' ,marginRight: '15px'}}/>
                                                             <div className="thumb-cart__item" style={{width : '125px' }}>
@@ -163,7 +163,7 @@ const CartPage = () => {
                                     </CategoryTotal>
 
                                     <ButtonTotal className="button-total">
-                                        <PayTotal href="" className="pay-total">
+                                        <PayTotal  className="pay-total">
                                             Thanh toán
                                         </PayTotal>
                                     </ButtonTotal>

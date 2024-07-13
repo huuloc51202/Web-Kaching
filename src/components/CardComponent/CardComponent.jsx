@@ -59,7 +59,7 @@ const CardComponent = ({arrImages}) => {
             
             {arrImages.map((image, index) => (
               <div key={index} >
-                <img src={image} alt={`slider-${index}`} preview={false} />
+                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
               </div>
             ))}
             
@@ -67,7 +67,7 @@ const CardComponent = ({arrImages}) => {
           
           <ProContent>
             
-            <a href="" style={{
+            <a  style={{
               color:'#000',
               verflow: 'hidden',
               display: '-webkit-box',
@@ -108,7 +108,7 @@ const CardComponent = ({arrImages}) => {
             
             {arrImages.map((image, index) => (
               <div key={index} >
-                <img src={image} alt={`slider-${index}`} preview={false} />
+                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
               </div>
             ))}
             
@@ -116,7 +116,7 @@ const CardComponent = ({arrImages}) => {
           
           <ProContent>
             
-            <a href="" style={{
+            <a  style={{
               color:'#000',
               verflow: 'hidden',
               display: '-webkit-box',
@@ -157,7 +157,7 @@ const CardComponent = ({arrImages}) => {
             
             {arrImages.map((image, index) => (
               <div key={index} >
-                <img src={image} alt={`slider-${index}`} preview={false} />
+                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
               </div>
             ))}
             
@@ -165,7 +165,7 @@ const CardComponent = ({arrImages}) => {
           
           <ProContent>
             
-            <a href="" style={{
+            <a  style={{
               color:'#000',
               verflow: 'hidden',
               display: '-webkit-box',
@@ -206,7 +206,7 @@ const CardComponent = ({arrImages}) => {
             
             {arrImages.map((image, index) => (
               <div key={index} >
-                <img src={image} alt={`slider-${index}`} preview={false} />
+                <img key={image}  src={image} alt={`slider-${index}`} preview={false} />
               </div>
             ))}
             
@@ -214,7 +214,7 @@ const CardComponent = ({arrImages}) => {
           
           <ProContent>
             
-            <a href="" style={{
+            <a  style={{
               color:'#000',
               verflow: 'hidden',
               display: '-webkit-box',
@@ -255,7 +255,7 @@ const CardComponent = ({arrImages}) => {
             
             {arrImages.map((image, index) => (
               <div key={index} >
-                <img src={image} alt={`slider-${index}`} preview={false} />
+                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
               </div>
             ))}
             
@@ -263,7 +263,7 @@ const CardComponent = ({arrImages}) => {
           
           <ProContent>
             
-            <a href="" style={{
+            <a  style={{
               color:'#000',
               verflow: 'hidden',
               display: '-webkit-box',

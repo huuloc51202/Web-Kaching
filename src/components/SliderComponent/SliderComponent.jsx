@@ -51,7 +51,7 @@ const SliderComponent = ({ arrImages }) => {
       <Slider ref={sliderRef} {...settings} >
         {arrImages.map((image, index) => (
           <div key={index} >
-            <Image src={image} alt={`slider-${index}`} preview={false} width="100%" />
+            <Image key={image} src={image} alt={`slider-${index}`} preview={false} width="100%" />
           </div>
         ))}
         <SliderProComponent arrImages={[prod1, juicypink1, text1, heart1]}/>
