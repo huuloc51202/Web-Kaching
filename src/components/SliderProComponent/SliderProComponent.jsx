@@ -4,6 +4,8 @@ import Slider from 'react-slick';
 
 
 const SliderProComponent = ({arrImages}) => {
+  // const {image, name} = props
+  
   const settings = {
     
     infinite: true,
@@ -22,6 +24,10 @@ const SliderProComponent = ({arrImages}) => {
             <Image key={image} src={image} alt={`slider-${index}`} preview={false} width="100%" />
           </div>
         ))}
+
+        {/* <div>
+          <Image key={image} src={image} alt={name} preview={false} width="100%" />
+        </div> */}
       </Slider>
     </div>
   )

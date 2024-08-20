@@ -5,20 +5,22 @@ import {routes} from './routes';
 import { isJsonString} from './utils'
 import { jwtDecode } from 'jwt-decode';
 import * as UserService from './services/UserService'
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { updateUser } from './redux/slides/userSlide';
 import axios from 'axios';
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    
-    const {storageData, decoded} = handleDecoded()
-    if(decoded?.id){
-      handleGetDetailsUser(decoded?.id, storageData )
-    }
+  const user = useSelector((state) => state.user)
+
+    useEffect(() => {
       
-  },[])
+      const {storageData, decoded} = handleDecoded()
+      if(decoded?.id){
+        handleGetDetailsUser(decoded?.id, storageData )
+      }
+        
+    },[])
 
   const handleDecoded = () => {
     let storageData = localStorage.getItem('access_token')
@@ -55,9 +57,10 @@ function App() {
         <Routes>
           {routes.map((route) => {
             const Page = route.page
+            const ischeckAuth = !route.isPrivate || user.isAdmin
             const Layout = route.isShowHeader ? DefaultComponent : Fragment
             return (
-              <Route path={route.path} element={
+              <Route key={route.path} path={ischeckAuth ? route.path : undefined} element={
                 <Layout>
                   <Page />
                 </Layout>

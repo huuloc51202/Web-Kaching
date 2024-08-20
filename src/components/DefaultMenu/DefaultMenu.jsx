@@ -15,7 +15,7 @@ const DefaultMenu = () => {
                 position: 'absolute',
                 width: '1665px',
                 top: '39px',
-                left: '-15px' , 
+                left: '-16.3px' , 
                 textAlign:'center', 
                 // display:'none', 
                 zIndex:'999',

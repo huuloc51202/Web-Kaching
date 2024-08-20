@@ -34,7 +34,9 @@ const PrevArrow = (props) => {
   );
 };
 
-const CardComponent = ({arrImages}) => {
+
+const CardComponent = (props) => {
+  const {arrImages, key, countInStock, description, image, name, price, type, soldOut} = props
   const settings = {
       
     infinite: true,
@@ -47,256 +49,54 @@ const CardComponent = ({arrImages}) => {
     prevArrow: <PrevArrow />, // Sử dụng mũi tên trước đó tùy chỉnh
   };
   return (
-    <Row>
-
-      <Col span={6}>
-        <WrapperCard
-          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-        
-        >
-          
-          <Slider  {...settings}>
-            
-            {arrImages.map((image, index) => (
-              <div key={index} >
-                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
-              </div>
-            ))}
-            
-          </Slider>
-          
-          <ProContent>
-            
-            <a  style={{
-              color:'#000',
-              verflow: 'hidden',
-              display: '-webkit-box',
-              textOverflow: 'ellipsis',
-              height: '55px',
-              textTransform: 'uppercase',
-              
-              }}
-            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
-            <div className="prd-price-box">
-
-              <span className="prd-price">550,000đ</span>
-            </div>
-          </ProContent>
-          <ItemSoldOut>
-            <span style={{
-              background: '#000',
-              color: '#fffef9',
-              textTransform: 'uppercase',
-              fontSize: '13px !important',
-              width: '100%',
-              padding: '10px 20px',
-              display:'none'
-              
-            }}>SOLD OUT</span>
-          </ItemSoldOut>
-        </WrapperCard>
-
-      </Col>
-
-      <Col span={6}>
-        <WrapperCard
-          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-        
-        >
-          
-          <Slider  {...settings}>
-            
-            {arrImages.map((image, index) => (
-              <div key={index} >
-                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
-              </div>
-            ))}
-            
-          </Slider>
-          
-          <ProContent>
-            
-            <a  style={{
-              color:'#000',
-              verflow: 'hidden',
-              display: '-webkit-box',
-              textOverflow: 'ellipsis',
-              height: '55px',
-              textTransform: 'uppercase',
-              
-              }}
-            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
-            <div className="prd-price-box">
-
-              <span className="prd-price">550,000đ</span>
-            </div>
-          </ProContent>
-          <ItemSoldOut>
-            <span style={{
-              background: '#000',
-              color: '#fffef9',
-              textTransform: 'uppercase',
-              fontSize: '13px !important',
-              width: '100%',
-              padding: '10px 20px',
-              display:'none'
-              
-            }}>SOLD OUT</span>
-          </ItemSoldOut>
-        </WrapperCard>
-
-      </Col>
-
-      <Col span={6}>
-        <WrapperCard
-          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-        
-        >
-          
-          <Slider  {...settings}>
-            
-            {arrImages.map((image, index) => (
-              <div key={index} >
-                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
-              </div>
-            ))}
-            
-          </Slider>
-          
-          <ProContent>
-            
-            <a  style={{
-              color:'#000',
-              verflow: 'hidden',
-              display: '-webkit-box',
-              textOverflow: 'ellipsis',
-              height: '55px',
-              textTransform: 'uppercase',
-              
-              }}
-            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
-            <div className="prd-price-box">
-
-              <span className="prd-price">550,000đ</span>
-            </div>
-          </ProContent>
-          <ItemSoldOut>
-            <span style={{
-              background: '#000',
-              color: '#fffef9',
-              textTransform: 'uppercase',
-              fontSize: '13px !important',
-              width: '100%',
-              padding: '10px 20px',
-              display:'none'
-              
-            }}>SOLD OUT</span>
-          </ItemSoldOut>
-        </WrapperCard>
-
-      </Col>
-
-      <Col span={6}>
-        <WrapperCard
-          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-        
-        >
-          
-          <Slider  {...settings}>
-            
-            {arrImages.map((image, index) => (
-              <div key={index} >
-                <img key={image}  src={image} alt={`slider-${index}`} preview={false} />
-              </div>
-            ))}
-            
-          </Slider>
-          
-          <ProContent>
-            
-            <a  style={{
-              color:'#000',
-              verflow: 'hidden',
-              display: '-webkit-box',
-              textOverflow: 'ellipsis',
-              height: '55px',
-              textTransform: 'uppercase',
-              
-              }}
-            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
-            <div className="prd-price-box">
-
-              <span className="prd-price">550,000đ</span>
-            </div>
-          </ProContent>
-          <ItemSoldOut>
-            <span style={{
-              background: '#000',
-              color: '#fffef9',
-              textTransform: 'uppercase',
-              fontSize: '13px !important',
-              width: '100%',
-              padding: '10px 20px',
-              // display:'none'
-              
-            }}>SOLD OUT</span>
-          </ItemSoldOut>
-        </WrapperCard>
-
-      </Col>
-
-      <Col span={6}>
-        <WrapperCard
-          style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-        
-        >
-          
-          <Slider  {...settings}>
-            
-            {arrImages.map((image, index) => (
-              <div key={index} >
-                <img key={image} src={image} alt={`slider-${index}`} preview={false} />
-              </div>
-            ))}
-            
-          </Slider>
-          
-          <ProContent>
-            
-            <a  style={{
-              color:'#000',
-              verflow: 'hidden',
-              display: '-webkit-box',
-              textOverflow: 'ellipsis',
-              height: '55px',
-              textTransform: 'uppercase',
-              
-              }}
-            >SSMA THE EMBROIDERY SHORTS - YELLOW</a>
-            <div className="prd-price-box">
-
-              <span className="prd-price">550,000đ</span>
-            </div>
-          </ProContent>
-          <ItemSoldOut>
-            <span style={{
-              background: '#000',
-              color: '#fffef9',
-              textTransform: 'uppercase',
-              fontSize: '13px !important',
-              width: '100%',
-              padding: '10px 20px',
-              // display:'none'
-              
-            }}>SOLD OUT</span>
-          </ItemSoldOut>
-        </WrapperCard>
-
-      </Col>
+    <div style={{display:'block', flex:'0 0 25%', maxWidth:'25%'}}>
+      <WrapperCard
+        style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
       
-    </Row>
-    
+      >
+        
+        <Slider  {...settings}>
+          
+          {arrImages.map((image, index) => (
+            <div key={index} >
+              <img key={image} src={image} alt={`slider-${index}`} preview={false} />
+            </div>
+          ))}
+          
+        </Slider>
+        
+        <ProContent>
+          
+          <a  style={{
+            color:'#000',
+            verflow: 'hidden',
+            display: '-webkit-box',
+            textOverflow: 'ellipsis',
+            height: '55px',
+            textTransform: 'uppercase',
+            
+            }}
+          >{name}</a>
+          <div className="prd-price-box">
 
+            <span className="prd-price">{price}đ</span>
+          </div>
+        </ProContent>
+        <ItemSoldOut>
+          <span style={{
+            background: '#000',
+            color: '#fffef9',
+            textTransform: 'uppercase',
+            fontSize: '13px !important',
+            width: '100%',
+            padding: '10px 20px',
+            display:'none'
+            
+          }}>{soldOut}</span>
+        </ItemSoldOut>
+      </WrapperCard>
+
+    </div>
         
   )
 }

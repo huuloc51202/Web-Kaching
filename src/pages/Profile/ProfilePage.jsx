@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
-import { InputForm, WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel } from './style'
+import { InputForm, WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel, WrapperUploadFile } from './style'
 import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
 import * as message from '../../components/Message/Message'
 import Loading from '../../components/LoadingComponent/Loading'
+import { updateUser } from '../../redux/slides/userSlide'
+import { Button, Upload } from 'antd'
+import {UploadOutlined} from '@ant-design/icons'
+import { getBase64 } from '../../utils'
 
 const ProfilePage = () => {
     const user = useSelector((state) => state.user)
@@ -13,19 +17,23 @@ const ProfilePage = () => {
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
+    const [avatar, setAvatar] = useState('')
     const mutation = useMutationHooks(
-        (id, data) => UserService.updateUser(id, data)
+        (data) =>{ 
+            const {id,access_token, ...rests} = data
+            UserService.updateUser(id, rests, access_token)
+        }
     )
     
     const dispatch = useDispatch()
     const {data, isSuccess, isError} = mutation
-    console.log('data', data)
 
     useEffect(() => {
         setEmail(user?.email)
         setName(user?.name)
         setPhone(user?.phone)
         setAddress(user?.address)
+        setAvatar(user?.avatar)
     }, [user])
 
     useEffect(() =>{
@@ -40,7 +48,7 @@ const ProfilePage = () => {
 
     const handleGetDetailsUser = async (id, token) =>{
         const res = await UserService.getDetailsUser(id, token)
-        dispatch(UserService.updateUser({...res?.data, access_token: token}))
+        dispatch(updateUser({...res?.data, access_token: token}))
       }
 
     const handleEmailChange = (e) => {
@@ -58,8 +66,17 @@ const ProfilePage = () => {
     const handleAddressChange = (e) => {
         setAddress(e.target.value)
     }
+
+    const handleAvatarChange = async ({fileList}) => {
+        const file = fileList[0]
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setAvatar(file.preview)
+    }
+
     const handleUpdate = () =>{
-        mutation.mutate(user?.id, {email,phone, name, address})
+        mutation.mutate({ id: user?.id, email,phone, name, address, avatar, access_token: user?.access_token})
     }
     return (
         <div style={{ width:'1270px', margin: '60px auto 0', height:'500px'}}> 
@@ -121,6 +138,29 @@ const ProfilePage = () => {
                     <WrapperInput>
                         <WrapperLabel htmlFor='address'>Address</WrapperLabel>
                         <InputForm style={{width:'300px'}} id="address" value={address} onChange={handleAddressChange} placeholder='Địa chỉ'/>
+                        <ButtonComponent
+                            onClick={handleUpdate}
+                            size={40}
+                            style={{
+                                height: '40px',
+                                width: 'fit-content',
+                                border: '1px solid #000',
+                                borderRadius:'4px',
+                                padding: '6px',
+                            }}
+                            textButton={'Cập nhật'}
+                            styleTextButton={{color:'#000', fontSize:'1.6rem', fontWeight:'700'}}
+                        ></ButtonComponent>
+                    </WrapperInput>
+                    <WrapperInput>
+                        <WrapperLabel htmlFor='avatar'>Avatar</WrapperLabel>
+                        <WrapperUploadFile onChange={handleAvatarChange} maxCount={1}> 
+                            <Button icon={<UploadOutlined />}>Upload</Button>
+                        </WrapperUploadFile>
+                        {avatar && (
+                            <img src={avatar} style={{height:'60px',width:'60px', borderRadius:'50%',objectFit:'cover'}} alt="avatar"/>
+                        )}
+                        {/* <InputForm style={{width:'300px'}} id="avatar" value={avatar} onChange={handleAvatarChange} placeholder='Địa chỉ'/> */}
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
