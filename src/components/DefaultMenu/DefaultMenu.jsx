@@ -1,19 +1,35 @@
 import { Col} from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MenuHeader } from './style'
+import * as ProductService from '../../services/PoductService'
+import TypeProduct from '../TypeProduct/TypeProduct'
 
 const DefaultMenu = () => {
     const navigate = useNavigate()
     const handleNavigateAll = () => {
-        navigate('/type')
+        navigate('/products')
     }
+
+    const [typeProducts,setTypeProducts] = useState([])
+
+    const fetchAllTypeProduct = async () => {
+        const res = await ProductService.getAllTypeProduct()
+        if(res?.status === 'OK'){
+            setTypeProducts(res?.data)
+        }
+        
+    }
+
+    useEffect(() => {
+        fetchAllTypeProduct()
+    },[])
 
     return (
         <div >
             <MenuHeader style={{
                 position: 'absolute',
-                width: '1665px',
+                width: '1668px',
                 top: '39px',
                 left: '-16.3px' , 
                 textAlign:'center', 
@@ -22,12 +38,21 @@ const DefaultMenu = () => {
                 backgroundColor: '#fff'
                 }}>
                 <Col  span={6}>
-                    <div onClick={handleNavigateAll} style={{padding:'20px',borderRight:'1px solid #000',cursor:'pointer'}}>
-                        ALL
+                    <div onClick={handleNavigateAll} style={{padding:'20px',borderRight:'1px solid #000',borderBottom:'1px solid #000',cursor:'pointer'}}>
+                        All
                     </div>
                     
                 </Col>
-                <Col  span={6}>
+                {typeProducts.map((item) => {
+                    return(
+                        <Col  span={6}>
+                            <TypeProduct name={item} key={item}/>
+                        </Col>
+                    )
+                })}
+                
+
+                {/* <Col  span={6}>
                     <div style={{padding:'20px',borderRight:'1px solid #000',cursor:'pointer'}}>TEES</div>
                     
                 </Col>
@@ -38,7 +63,7 @@ const DefaultMenu = () => {
                 <Col  span={6}>
                     <div style={{padding:'20px',cursor:'pointer'}}>PANTS</div>
                     
-                </Col>
+                </Col> */}
             </MenuHeader>
 
             

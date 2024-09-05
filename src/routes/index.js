@@ -4,7 +4,7 @@ import CartPage from "../pages/Cartpage/CartPage";
 import ClientService from "../pages/ClientService/ClientService";
 import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
-import OrderPage from "../pages/OrderPage/OrderPage";
+import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
@@ -19,8 +19,8 @@ export const routes = [
         isShowHeader: true
     },
     {
-        path: '/order',
-        page: OrderPage,
+        path: '/cart/payment',
+        page: PaymentPage,
         isShowHeader: true
     },
     {
@@ -29,7 +29,7 @@ export const routes = [
         isShowHeader: true
     },
     {
-        path: '/:type',
+        path: '/product/:type',
         page: TypeProductsPage,
         isShowHeader: true
     },
@@ -49,7 +49,7 @@ export const routes = [
         isShowHeader: true
     },
     {
-        path: '/product-details',
+        path: '/product-details/:id',
         page: ProductDetailsPage,
         isShowHeader: true
     },

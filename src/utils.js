@@ -14,3 +14,30 @@ new Promise((resolve, reject) => {
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
 });
+
+export const renderOptions = (arr) => {
+    let results = []
+    if(arr){
+        results = arr?.map((opt) => {
+            return {
+                value: opt,
+                label: opt,
+            }
+        })
+    }
+    results.push({
+        label: 'Thêm Type',
+        value:'add_type'
+    })
+    return results
+}
+
+export const convertPrice = (price) => {
+    try {
+        const result = price?.toLocaleString().replaceAll(',', '.')
+        return result
+    } catch (error) {
+        return null
+    }
+}
+

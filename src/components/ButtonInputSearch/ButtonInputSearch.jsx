@@ -14,9 +14,9 @@ const ButtonInputSearch = (props) => {
         display:'flex' , 
         border:'1px solid #000', 
         position: 'absolute',
-        width: '1662px',
+        width: '1666px',
         top: '40.5px',
-        right: '-132px' , 
+        right: '-117px' , 
         textAlign:'center', 
         zIndex:'999',
         backgroundColor: '#fff',
@@ -28,7 +28,7 @@ const ButtonInputSearch = (props) => {
         icon={<SearchOutlined/>} 
         style={{ marginLeft:'30px', border:'#fff' }}
       />
-      <InputComponent  placeholder={placeholder} style={{border:'none'}} />
+      <InputComponent  placeholder={placeholder} style={{border:'none'}} {...props}/>
     </div>
   )
 }

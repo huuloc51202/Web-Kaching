@@ -49,7 +49,7 @@ const ProfilePage = () => {
     const handleGetDetailsUser = async (id, token) =>{
         const res = await UserService.getDetailsUser(id, token)
         dispatch(updateUser({...res?.data, access_token: token}))
-      }
+    }
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value)

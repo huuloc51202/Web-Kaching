@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as UserService from '../../services/UserService'
 import { updateUser, resetUser } from '../../redux/slides/userSlide';
+import { searchProduct } from '../../redux/slides/productSlide';
 
 const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHiddenCart = false}) => {
     const dispatch = useDispatch()
@@ -20,6 +21,8 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
     const user = useSelector((state) => state.user)
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
+    const [search, setSearch] = useState('')
+    const order = useSelector((state) => state.order)
 
     useEffect(() => {
         setUserName(user?.name)
@@ -55,9 +58,6 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
     )
 
     
-    const handleNavigateCart = () => {
-        navigate('/cart')
-    }
     const handleNavigateHome = () => {
         navigate('/')
     }
@@ -91,7 +91,10 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
     };
 
 
-    // 
+    const onSearch = (e) => {
+        setSearch(e.target.value)
+        dispatch(searchProduct(e.target.value))
+    }
     return (
         <div>
             <WrapperHeader style={{justifyContent: isHiddenCart && isHiddenMenu && isHiddenSearch ? 'space-between' : 'unset'}}>
@@ -120,6 +123,7 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
                                         placeholder="Tìm kiếm...."
                                         onClick={handleSearchClick}
                                         onFocus={handleSearchClick}
+                                        onChange={onSearch}
                                     />
                                 )}    
                             </div>
@@ -128,8 +132,8 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
 
                         {!isHiddenCart && (
 
-                            <div onClick={handleNavigateCart} style={{ fontSize: '2rem' , padding:'0px 15px',cursor: 'pointer'}}>
-                                <Badge count={2} size="small">
+                            <div onClick={() => navigate('/cart')} style={{ fontSize: '2rem' , padding:'0px 15px',cursor: 'pointer'}}>
+                                <Badge count={order?.orderItems?.length} size="small">
 
                                     <ShoppingOutlined style={{ fontSize: '2rem' }}/>
                                 </Badge>

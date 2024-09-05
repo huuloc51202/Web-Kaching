@@ -75,7 +75,7 @@ const SignUpPage = () => {
     <SignUp className="main-site main-childs signup container">
       <UserWrapper className="user-wrapper">
         <div className="user-nav anonymous-awe">
-          <p className="active" rel="nofollow" style={{fontSize:'1.6rem',textDecoration:'uppercase',margin:'0 0 15px',fontWeight:'500'}}>Đăng nhập</p>
+          <p className="active" rel="nofollow" style={{fontSize:'1.6rem',textDecoration:'uppercase',margin:'0 0 15px',fontWeight:'500'}}>Đăng ký</p>
 
         </div>
         <form  id="formAccount" className="validate" method="post" style={{}}>

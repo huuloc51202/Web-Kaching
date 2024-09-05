@@ -52,6 +52,8 @@ const SliderComponent = ({ arrImages }) => {
     const res = await ProductService.getAllProduct()
     return res
   }
+
+
   const {isLoading, data: products} = useQuery({
     queryKey: ['products'],
     queryFn: fetchProductAll,

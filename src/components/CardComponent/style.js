@@ -17,7 +17,7 @@ export const ProContent = styled.div`
     font-weight:500;
     padding:0 15px;
     text-align:center;
-    height:93px;
+    height:100px;
 `
 
 export const ItemSoldOut = styled.div`

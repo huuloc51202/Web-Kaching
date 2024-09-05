@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Btn, ClearFixA, FormLogin, SignIn, UserWrapper } from './style'
 import {
   EyeFilled,
@@ -15,6 +15,7 @@ import { updateUser } from '../../redux/slides/userSlide';
 const SignInPage = () => {
 
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const location = useLocation()
   const togglePasswordVisibility = () => {
     setIsShowPassword(!isShowPassword);
   }
@@ -34,11 +35,15 @@ const SignInPage = () => {
   const {data, isSuccess} = mutation
   useEffect(() =>{
     if(isSuccess){
-      navigate('/')
+      if(location?.state){
+        navigate(location?.state)
+      }else{
+
+        navigate('/')
+      }
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       if(data?.access_token){
         const decoded = jwtDecode(data?.access_token)
-        console.log('decode', decoded)
         if(decoded?.id){
           handleGetDetailsUser(decoded?.id, data?.access_token)
         }

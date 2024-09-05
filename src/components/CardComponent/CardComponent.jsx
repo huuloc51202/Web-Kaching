@@ -5,7 +5,8 @@ import {
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { convertPrice } from '../../utils';
 
 // Tạo các thành phần mũi tên tùy chỉnh
 const NextArrow = (props) => {
@@ -36,7 +37,16 @@ const PrevArrow = (props) => {
 
 
 const CardComponent = (props) => {
-  const {arrImages, key, countInStock, description, image, name, price, type, soldOut} = props
+  const { key, countInStock, description, image, name, price, type, soldOut,id,discount} = props
+  // Chuyển đổi `image` thành mảng nếu nó không phải là mảng
+  const imageArray = Array.isArray(image) ? image : [image];
+
+  // Nếu chỉ có một ảnh, nhân đôi ảnh để đảm bảo có ít nhất 2 ảnh
+  const extendedImages = imageArray.length === 1 ? [imageArray[0], imageArray[0]] : imageArray;
+  
+  // Giới hạn chỉ lấy 2 ảnh
+  const limitedImages = extendedImages.slice(0, 2);
+  
   const settings = {
       
     infinite: true,
@@ -48,18 +58,24 @@ const CardComponent = (props) => {
     nextArrow: <NextArrow />, // Sử dụng mũi tên tiếp theo tùy chỉnh
     prevArrow: <PrevArrow />, // Sử dụng mũi tên trước đó tùy chỉnh
   };
+
+  const navigate = useNavigate()
+  const handleDetailProduct = (id) => {
+    navigate(`/product-details/${id}`)
+  }
+
   return (
     <div style={{display:'block', flex:'0 0 25%', maxWidth:'25%'}}>
       <WrapperCard
         style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
-      
+        
       >
         
-        <Slider  {...settings}>
+        <Slider  {...settings} > 
           
-          {arrImages.map((image, index) => (
-            <div key={index} >
-              <img key={image} src={image} alt={`slider-${index}`} preview={false} />
+          {limitedImages.map((image, index) => (
+            <div key={index} onClick={() => handleDetailProduct(id)}>
+              <img  src={image} alt={`slider-${index}`}  style={{cursor:'pointer'}}/>
             </div>
           ))}
           
@@ -68,32 +84,43 @@ const CardComponent = (props) => {
         <ProContent>
           
           <a  style={{
-            color:'#000',
-            verflow: 'hidden',
-            display: '-webkit-box',
-            textOverflow: 'ellipsis',
-            height: '55px',
-            textTransform: 'uppercase',
-            
+              color:'#000',
+              verflow: 'hidden',
+              display: '-webkit-box',
+              textOverflow: 'ellipsis',
+              height: '43px',
+              textTransform: 'uppercase',
+              WebkitBoxOrient: 'vertical',
+
             }}
+            onClick={() => handleDetailProduct(id)}
           >{name}</a>
           <div className="prd-price-box">
+            <span className="prd-price">{convertPrice(price)}đ</span>
+            {discount > 0 && (
+              <div style={{backgroundColor:'red',borderRadius:'70% 30% 30% 70% / 60% 40% 60% 40%'}}>
+                <span className="discount" style={{color:'#fff'}}>-{discount}%</span>
 
-            <span className="prd-price">{price}đ</span>
+              </div>
+
+            )}
           </div>
         </ProContent>
-        <ItemSoldOut>
-          <span style={{
-            background: '#000',
-            color: '#fffef9',
-            textTransform: 'uppercase',
-            fontSize: '13px !important',
-            width: '100%',
-            padding: '10px 20px',
-            display:'none'
-            
-          }}>{soldOut}</span>
-        </ItemSoldOut>
+        {soldOut && (
+          <ItemSoldOut>
+            <span style={{
+              background: '#000',
+              color: '#fffef9',
+              textTransform: 'uppercase',
+              fontSize: '13px',
+              width: '100%',
+              padding: '10px 20px',
+            }}>
+              {soldOut}
+            </span>
+          </ItemSoldOut>
+        )}
+
       </WrapperCard>
 
     </div>

@@ -1,9 +1,19 @@
 import { Table } from 'antd';
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
+import { Excel } from "antd-table-saveas-excel";
 
 const TableComponent = (props) => {
-  const { selectionType = 'checkbox' ,data = [] , columns = [] } = props
+  const { selectionType = 'checkbox' ,data:dataSource = [] , columns = [], handleDeleteMany } = props
   const [rowSelectedKeys, setRowSelectedKeys] = useState([])
+  const [pagination, setPagination] = useState({
+    current: 1, 
+    pageSize: 5, 
+    total: dataSource.length,
+  });
+  const newColumnExport = useMemo(() => {
+    const arr =  columns?.filter((col) => col.dataIndex !== 'action')
+    return arr
+  },[columns])
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       setRowSelectedKeys(selectedRowKeys)
@@ -17,8 +27,24 @@ const TableComponent = (props) => {
   };
 
   const handleDeleteAll = () => {
-
+    handleDeleteMany(rowSelectedKeys)
   }
+
+  const exportExcel = () => {
+    const excel = new Excel();
+    excel
+      .addSheet("test")
+      .addColumns(newColumnExport)
+      .addDataSource(dataSource, {
+        str2Percent: true
+      })
+      .saveAs("Excel.xlsx");
+  };
+
+  const handleTableChange = (pagination) => {
+    setPagination(pagination);
+    
+  };
 
   return (
     <>
@@ -36,17 +62,23 @@ const TableComponent = (props) => {
           Xoá tất cả 
         </div>
       )}
+      <button onClick={exportExcel}> Export excel </button>
       <Table
+        id='table-xls'
         rowSelection={{
         type: selectionType,
         ...rowSelection,
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={dataSource}
+        pagination={pagination} 
+        onChange={handleTableChange} 
         {...props}
+        
       />
+      
     </>
-   
+    
       
   )
 }
