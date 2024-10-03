@@ -1,6 +1,6 @@
 import {  Col, Form, message } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
-import { ButtonTotal, CategoryTotal, FieldInput, FieldInputWrapper, Fieldset, PayTotal,RadioContentInput,RadioWrapper,Title } from './style'
+import { ButtonTotal, CategoryTotal, FieldInput, FieldInputWrapper, Fieldset, PayTotal,PayTotal2,ProductCart,RadioContentInput,RadioWrapper,Title } from './style'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
@@ -12,11 +12,16 @@ import * as UserService from '../../services/UserService'
 import * as OrderService from '../../services/OrderService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
 import { updateUser } from '../../redux/slides/userSlide';
-import Loading from '../../components/LoadingComponent/Loading';
+import {  useNavigate } from 'react-router-dom';
+import { clearOrder } from '../../redux/slides/orderSlide';
+import { createMomoTransaction } from '../../services/PaymentService';
+import  momoimg from '../../assets/img/slides/momo.PNG'
 
 const PaymentPage = () => {
     const order = useSelector((state) => state.order)
     const user = useSelector((state) => state.user)
+
+    const navigate = useNavigate()
     const [payment, setPayment] = useState("COD");
     const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false)
     const [stateUserDetails, setStateUserDetails] = useState({
@@ -111,7 +116,9 @@ const PaymentPage = () => {
     }
 
     const handleAddOrder = () => {
-        let shippingPrice = diliveryPriceMemo === 0 ? 1 : diliveryPriceMemo;
+        let shippingPrice = diliveryPriceMemo > 0 ? diliveryPriceMemo : 0.01;
+        
+        
         if(user?.access_token && order?.orderItems &&  user?.name && user?.address && user?.city && user?.phone && payment  && priceMemo  ){
             mutationAddOrder.mutate(
                 { 
@@ -137,7 +144,6 @@ const PaymentPage = () => {
         }
     }
 
-    console.log('order',order,user)
 
     const mutationAddOrder = useMutationHooks(
         (data) => {
@@ -153,11 +159,45 @@ const PaymentPage = () => {
             )
             return res
         },
+        {
+            onSuccess: (response) => {
+                console.log('Order created successfully:', response);
+                message.success('Đặt hàng thành công');
+            },
+            onError: (error) => {
+                console.error('Error creating order:', error.response ? error.response.data : error);
+                message.error('Có lỗi xảy ra khi tạo đơn hàng, vui lòng thử lại!');
+            }
+        }
 
     )
     
-    const {isLoading} = mutationAddOrder
-
+    const {data, isLoading, isSuccess, isError} = mutationAddOrder
+    
+    useEffect(() => {
+        if(isSuccess && data?.status === 'OK'){
+            const arrayOrdered = []
+            order?.orderItems?.forEach(element => {
+                arrayOrdered.push(element.product)
+            })
+            dispatch(clearOrder({arrayOrdered}))
+            localStorage.removeItem('cart');
+            navigate('/orderSuccess',  {
+                state: {
+                    payment,
+                    orders: order?.orderItems,
+                    diliveryPriceMemo,
+                    priceMemo,
+                    totalPriceMemo,
+                    fullName: user?.name, 
+                    address: user?.address, 
+                    city: user?.city, 
+                    phone: user?.phone,
+                    email: user?.email,
+                }
+            })
+        }
+    },[isSuccess,isError])
 
     const handleCancelUpdate =  () => {
         setStateUserDetails({
@@ -185,6 +225,44 @@ const PaymentPage = () => {
         }
     }
 
+    // thanh toan momo
+
+    // const handleMomoPayment = async (access_token) => {
+    //     try {
+    //         const requestId = `order-${Date.now()}`;
+    //         const amount = 100000;
+    //         const orderId = requestId;
+    //         const orderInfo = 'Thanh toán đơn hàng';
+    //         const returnUrl = 'http://localhost:3000/callback';
+    //         const notifyUrl = 'http://localhost:3000/notify';
+    //         const requestType = 'captureWallet';
+    
+    //         const paymentDetails = {
+    //             requestId,
+    //             amount,
+    //             orderId,
+    //             orderInfo,
+    //             returnUrl,
+    //             notifyUrl,
+    //             requestType,
+    //         };
+    
+    //         // Gửi yêu cầu tới server của bạn để thực hiện giao dịch MoMo
+    //         const data = await createMomoTransaction(paymentDetails, access_token);
+    
+    //         if (data && data.payUrl) {
+    //             // Chuyển hướng người dùng đến trang thanh toán MoMo
+    //             window.location.href = data.payUrl;
+    //         } else {
+    //             console.error('Không thể tạo giao dịch MoMo:', data);
+    //         }
+    //     } catch (error) {
+    //         console.error('Lỗi khi tạo giao dịch MoMo:', error);
+    //     }
+    // };
+    
+    
+
     return (
         <div className="grid wide" style={{width:'100%', maxWidth:'1021px',margin:'80px auto 30px'}}>
             
@@ -201,9 +279,9 @@ const PaymentPage = () => {
                     </div>     
                     
                     {/* <!-- body --> */}
-                    <div className="product-cart" style={{display:'flex'}}>  
+                    <ProductCart className="product-cart" >    
                         
-                        <Col span={18} style={{paddingLeft:'0px'}}>
+                        <Col xs={24}  md={18}style={{paddingLeft:'0px'}}>
                             <div className="table-cart" >
                                 <div className="table__product" style={{marginBottom: '20px'}}>
                                     <div className="step-sections ">
@@ -315,6 +393,8 @@ const PaymentPage = () => {
                                                                     </div>
                                                                 </RadioContentInput>
                                                             </RadioWrapper>
+
+                                                            
                                                         </div>
                                                     </div>
 
@@ -332,7 +412,7 @@ const PaymentPage = () => {
                             
                             </div>
                         </Col>
-                        <Col span={6} style={{marginLeft:'30px'}}>
+                        <Col xs={24}  md={6} style={{marginLeft:'0px'}}>
                             <nav className="category">
                                 <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
                                     
@@ -348,12 +428,36 @@ const PaymentPage = () => {
                                         Tổng tiền
                                         <b className="total-cate" id="total-cate">{convertPrice(totalPriceMemo)}₫</b>
                                     </CategoryTotal>
+                                    
+                                    { payment === 'MOMO' ? (
+                                        <>
 
-                                    <ButtonTotal className="button-total" >
-                                        <PayTotal  className="pay-total" onClick={() => handleAddOrder()}  style={{cursor:'pointer'}}>
-                                            Đặt hàng
-                                        </PayTotal>
-                                    </ButtonTotal>
+                                            <ButtonTotal className="button-total">
+                                                <PayTotal2
+                                                    className="pay-total"
+                                                    // onClick={handleMomoPayment}
+                                                    onClick={() => handleAddOrder()} 
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    Thanh toán MoMo
+                                                </PayTotal2>
+                                            </ButtonTotal>
+
+                                            <div>
+                                                <span>Khi bạn chuyển khoản nội dung ghi tên và sđt nha </span>
+                                                <img className="main-img" src={momoimg} style={{width: '100%', marginRight: '9px'}}/>
+                                            </div>
+                                        </>
+
+                                        
+                                    ) : (
+
+                                        <ButtonTotal className="button-total" >
+                                            <PayTotal  className="pay-total" onClick={() => handleAddOrder()}  style={{cursor:'pointer'}}>
+                                                Đặt hàng
+                                            </PayTotal>
+                                        </ButtonTotal>
+                                    )}
 
                                 </div>
 
@@ -362,7 +466,7 @@ const PaymentPage = () => {
                             </nav>
                         </Col>
                         
-                    </div>
+                    </ProductCart>
 
                     
                 </div>

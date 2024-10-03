@@ -29,7 +29,7 @@ const DefaultMenu = () => {
         <div >
             <MenuHeader style={{
                 position: 'absolute',
-                width: '1668px',
+                maxWidth: '100%',
                 top: '39px',
                 left: '-16.3px' , 
                 textAlign:'center', 
@@ -37,7 +37,7 @@ const DefaultMenu = () => {
                 zIndex:'999',
                 backgroundColor: '#fff'
                 }}>
-                <Col  span={6}>
+                <Col  xs={24} sm={24} md={24}>
                     <div onClick={handleNavigateAll} style={{padding:'20px',borderRight:'1px solid #000',borderBottom:'1px solid #000',cursor:'pointer'}}>
                         All
                     </div>
@@ -45,7 +45,7 @@ const DefaultMenu = () => {
                 </Col>
                 {typeProducts.map((item) => {
                     return(
-                        <Col  span={6}>
+                        <Col   xs={24} sm={24} md={24}>
                             <TypeProduct name={item} key={item}/>
                         </Col>
                     )

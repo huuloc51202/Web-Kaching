@@ -1,7 +1,7 @@
 import React, {  useState } from 'react'
 import CardComponent from '../../components/CardComponent/CardComponent'
 import NavBarComponent from '../../components/NavBarComponent/NavBarComponent'
-import { Pagination} from 'antd'
+import { Pagination, Row} from 'antd'
 import { useQuery } from '@tanstack/react-query';
 import * as ProductService from '../../services/PoductService'
 import { useSelector } from 'react-redux'
@@ -40,7 +40,7 @@ const ProductsPage = () => {
         <NavBarComponent />
         <Loading isPending={isLoading}>
   
-          <div style={{display:'flex', flexFlow:'row wrap', minWidth:'0'}}>
+          <Row style={{display:'flex', flexFlow:'row wrap', minWidth:'0'}}>
             {products?.data?.map((product) => {
               return (
                 <CardComponent 
@@ -51,7 +51,7 @@ const ProductsPage = () => {
                   name={product.name}
                   price={product.price}
                   type={product.type}
-                  soldOut={product.soldOut}
+                  selled={product.selled}
                   discount={product.discount}
                   id={product._id} 
                 />
@@ -59,7 +59,7 @@ const ProductsPage = () => {
             })}
             
             {/* <CardComponent arrImages={[prod1, juicypink1]} /> */}
-          </div>
+          </Row>
         </Loading>
         <Pagination
           current={currentPage}

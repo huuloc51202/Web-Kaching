@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as UserService from '../../services/UserService'
 import { updateUser, resetUser } from '../../redux/slides/userSlide';
 import { searchProduct } from '../../redux/slides/productSlide';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHiddenCart = false}) => {
     const dispatch = useDispatch()
@@ -22,6 +24,7 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [search, setSearch] = useState('')
+    const [isOpenPopup,setIsOpenPopup] = useState(false)
     const order = useSelector((state) => state.order)
 
     useEffect(() => {
@@ -44,18 +47,35 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
         navigate('/sign-in')
     }
 
-    
-
     const content = (
-        <div>
-          <WrapperContentPopup onClick={() => {navigate('/profile-user')}}>Thông tin cá nhân</WrapperContentPopup>
+        <div >
+          <WrapperContentPopup onClick={() => handleClickNavigate('profile')}>Thông tin cá nhân</WrapperContentPopup>
           {user?.isAdmin && (
-
-            <WrapperContentPopup onClick={() => {navigate('/system/admin')}}>Quản lí hệ thống</WrapperContentPopup>
+            <WrapperContentPopup onClick={() => handleClickNavigate('admin')}>Quản lí hệ thống</WrapperContentPopup>
           )}
-          <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
+          <WrapperContentPopup onClick={() => handleClickNavigate('my-order')}>Đơn hàng của tôi</WrapperContentPopup>
+          <WrapperContentPopup onClick={() => handleClickNavigate('logout')}>Đăng xuất</WrapperContentPopup>
         </div>
     )
+      
+    const handleClickNavigate = (type)  => {
+    if(type === 'profile'){
+        navigate('/profile-user');
+    } else if(type === 'admin'){
+        navigate('/system/admin');
+    } else if(type === 'my-order'){
+        navigate('/my-order',{ state: {
+            id: user?.id,
+            token: user?.access_token
+        }});
+            
+        
+    } else {
+        handleLogout();
+    }
+    setIsOpenPopup(false);
+    }
+      
 
     
     const handleNavigateHome = () => {
@@ -142,28 +162,39 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
                         
                         
                         <>  
-                            {userAvatar ? (
-                                <img src={userAvatar} alt="avatar" style={{
-                                    height:'25px',width:'25px', borderRadius:'50%',objectFit:'cover'
-                                }}/>
-                            ) : (
 
-                                <></>
-                            )}
+                            
+                            
+                            
                             {user?.access_token ?(
                                 <>
                                     
-                                    <Popover content={content} trigger="click">
-                                        <div style={{ cursor: 'pointer'}}>{userName?.length ? userName : user?.email}</div>
+                                    <Popover content={content} trigger="click" open={isOpenPopup}>
+                                        {userAvatar ? (
+                                            <img src={userAvatar} alt="avatar"  onClick={() => setIsOpenPopup((prev) => !prev)} style={{
+                                                height:'25px',width:'25px', borderRadius:'50%',objectFit:'cover',cursor: 'pointer'
+                                            }}/>
+                                        ) : (
+
+                                            <div style={{ cursor: 'pointer' }} onClick={() => setIsOpenPopup((prev) => !prev)}>
+                                                {userName?.length ? userName : user?.email}
+                                            </div>
+                                        )}
+                                        
                                     </Popover>
                                 </>
                             ) : (
                                 <div onClick={handleNavigateLogin}  style={{ cursor: 'pointer'}}>
                                     
-                                    <UserOutlined style={{ fontSize: '2rem' , padding:'0px 15px'}}/>
+                                    <UserOutlined style={{ fontSize: '2rem' , padding:'0px '}}/>
                                 </div>
 
                             )}
+
+                            
+                            
+                            
+
                         </>
                         
                         

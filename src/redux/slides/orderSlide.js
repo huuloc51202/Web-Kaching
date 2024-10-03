@@ -74,12 +74,15 @@ export const orderSlide = createSlice({
         },
         clearOrder: (state) => {
             state.orderItems = [];
+        },
+        updateOrder: (state, action) => {
+            state.orderItems = action.payload;  // Cập nhật toàn bộ giỏ hàng
         }
         
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { addOrderProduct,increaseAmount,decreaseAmount,removeOrderProduct,clearOrder } = orderSlide.actions
+export const { addOrderProduct,increaseAmount,decreaseAmount,removeOrderProduct,clearOrder,updateOrder } = orderSlide.actions
 
 export default orderSlide.reducer

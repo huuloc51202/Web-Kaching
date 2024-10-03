@@ -1,4 +1,23 @@
+import { Col } from "antd";
 import styled from "styled-components";
+
+export const SliderProCol = styled(Col)`
+    padding: 40px 15px;
+    border-right: 1px solid #000;
+    @media (max-width: 575px) {
+        border-right: 1px solid #fff
+    }
+`
+
+export const SliderPro = styled.div`
+
+    padding: 0 45px;
+    @media (min-width: 1490px) {
+        padding: 0 175px;
+    }
+
+   
+`
 
 export const SliderProItem = styled.div`
 
@@ -17,7 +36,7 @@ export const SliderProImg = styled.img`
 `
 
 export const ListImageSm = styled.img`
-    width: 100px;
+    width: 100%;
     margin : 5px;
 `
 
@@ -31,6 +50,15 @@ export const Control = styled.div`
     padding: 8px 13px;
     cursor: pointer;
 
+`
+
+export const ProductActionCol = styled.div`
+    max-height:850px;
+    overflow-y:auto;
+    @media ( max-width: 575px){
+        max-height:100%;
+        overflow-y: hidden;
+    }
 `
 
 export const ProductAction = styled.div`
@@ -106,7 +134,7 @@ export const QtyInput = styled.input`
     border-left: none;
     padding-left: 5px;
     width: 100px;
-    height: 26px;
+    height: 29px;
     text-align: center;
 `
 

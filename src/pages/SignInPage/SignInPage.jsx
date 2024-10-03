@@ -11,6 +11,7 @@ import Loading from '../../components/LoadingComponent/Loading';
 import { jwtDecode } from "jwt-decode"
 import { useDispatch} from 'react-redux';
 import { updateUser } from '../../redux/slides/userSlide';
+import * as message from '../../components/Message/Message'
 
 const SignInPage = () => {
 
@@ -32,9 +33,10 @@ const SignInPage = () => {
   )
   
   const dispatch = useDispatch()
-  const {data, isSuccess} = mutation
+  const {data, isSuccess ,isError} = mutation
   useEffect(() =>{
-    if(isSuccess){
+    if(isSuccess && data?.status !== 'ERR'){
+      message.success('Đăng nhập thành công');
       if(location?.state){
         navigate(location?.state)
       }else{
@@ -48,8 +50,10 @@ const SignInPage = () => {
           handleGetDetailsUser(decoded?.id, data?.access_token)
         }
       }
+    }else if(isError && data?.status === 'ERR'){
+      message.error('Đăng nhập thất bại');
     }
-  }, [isSuccess])
+  }, [isSuccess,isError])
 
   
   const handleGetDetailsUser = async (id, token) =>{
@@ -79,12 +83,12 @@ const SignInPage = () => {
   return (
     
     <SignIn className="signin">
-      <UserWrapper className="user-wrapper">
+      <UserWrapper xs={24} sm={24} md={12} className="user-wrapper">
         <div className="user-nav">
           <p className="active" rel="nofollow" style={{fontSize:'1.6rem',textDecoration:'uppercase',margin:'0 0 15px',fontWeight:'500'}}>Đăng nhập</p>
 
         </div>
-        <form  id="formAccount" className="validate" method="post" style={{}}>
+        <form  id="formAccount" className="validate" method="post" >
           <input type="hidden" value="" name="csrf" id="csrf"/>
           <div className="form-group" style={{marginBottom:'1.3rem'}}>
             {/* <div className="usernameformError parentFormformAccount formError" style={{opacity: '0.87', position: 'absolute', top: '58.5px', left: '973.5px', marginTop: '-43px'}}>
@@ -123,7 +127,7 @@ const SignInPage = () => {
               >Đăng nhập</Btn>
             </div>
           </Loading>
-          <div className="user-foot d-flex" style={{fontSize:'1.5rem',cursor:'pointer'}}>
+          <div className="user-foot d-flex" style={{fontSize:'1.5rem',cursor:'pointer',justifyContent:'center'}}>
             <ClearFixA  className="clearfix" rel="nofollow" onClick={handleNavigateSignUp}>Đăng ký </ClearFixA>
             <span>•</span>
             <ClearFixA className="clearfix"  rel="nofollow">Quên mật khẩu</ClearFixA>

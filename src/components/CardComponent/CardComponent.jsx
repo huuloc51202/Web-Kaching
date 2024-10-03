@@ -1,12 +1,13 @@
 import React from 'react'
 import Slider from 'react-slick';
-import { ItemSoldOut, ProContent, WrapperCard } from './style'
+import { ItemSoldOut, PrdPriceBox, ProContent, WrapperCard } from './style'
 import {
   LeftOutlined,
   RightOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { convertPrice } from '../../utils';
+import { Col } from 'antd';
 
 // Tạo các thành phần mũi tên tùy chỉnh
 const NextArrow = (props) => {
@@ -37,7 +38,7 @@ const PrevArrow = (props) => {
 
 
 const CardComponent = (props) => {
-  const { key, countInStock, description, image, name, price, type, soldOut,id,discount} = props
+  const { key, countInStock, description, image, name, price, types,id,discount,selled} = props
   // Chuyển đổi `image` thành mảng nếu nó không phải là mảng
   const imageArray = Array.isArray(image) ? image : [image];
 
@@ -65,10 +66,11 @@ const CardComponent = (props) => {
   }
 
   return (
-    <div style={{display:'block', flex:'0 0 25%', maxWidth:'25%'}}>
+    <Col xs={12} sm={12} md={8} lg={6} >
       <WrapperCard
-        style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
         
+        style={{ padding:'6px ' , borderRight:'1px solid #000' , borderBottom:'1px solid #000' }}
+       
       >
         
         <Slider  {...settings} > 
@@ -95,7 +97,7 @@ const CardComponent = (props) => {
             }}
             onClick={() => handleDetailProduct(id)}
           >{name}</a>
-          <div className="prd-price-box">
+          <PrdPriceBox className="prd-price-box"  >
             <span className="prd-price">{convertPrice(price)}đ</span>
             {discount > 0 && (
               <div style={{backgroundColor:'red',borderRadius:'70% 30% 30% 70% / 60% 40% 60% 40%'}}>
@@ -104,9 +106,9 @@ const CardComponent = (props) => {
               </div>
 
             )}
-          </div>
+          </PrdPriceBox>
         </ProContent>
-        {soldOut && (
+        {countInStock === 0 && (
           <ItemSoldOut>
             <span style={{
               background: '#000',
@@ -116,14 +118,14 @@ const CardComponent = (props) => {
               width: '100%',
               padding: '10px 20px',
             }}>
-              {soldOut}
+              Hết hàng
             </span>
           </ItemSoldOut>
         )}
 
       </WrapperCard>
 
-    </div>
+    </Col>
         
   )
 }

@@ -1,4 +1,4 @@
-import { Pagination } from 'antd'
+import { Pagination, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
@@ -47,7 +47,7 @@ const TypeProductsPage = () => {
       <NavBarComponent />
       <Loading isPending={loading}>
 
-        <div style={{display:'flex', flexFlow:'row wrap', minWidth:'0'}}>
+        <Row style={{display:'flex', flexFlow:'row wrap', minWidth:'0'}}>
           {products?.filter((pro) => {
             if(searchDebounce === ''){
               return pro
@@ -64,14 +64,14 @@ const TypeProductsPage = () => {
                 name={product.name}
                 price={product.price}
                 type={product.type}
-                soldOut={product.soldOut}
+                selled={product.selled}
                 discount={product.discount}
                 id={product._id} 
               />
             )
           })}
           
-        </div>
+        </Row>
         <Pagination defaultCurrent={paginate?.page + 1} total={paginate?.total} onChange={onChange} style={{textAlign:'center',padding:'20px 0'}}/>
       </Loading>
     </div>

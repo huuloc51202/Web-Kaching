@@ -1,12 +1,13 @@
+import { Col, Row } from "antd";
 import styled from "styled-components";
 
-export const SignUp = styled.div`
-    margin: 120px 132.500px 80px;
+export const SignUp = styled(Row)`
+    margin: 120px 0px 80px;
     display: flex;
     justify-content: center;
 `
 
-export const UserWrapper = styled.div`
+export const UserWrapper = styled(Col)`
     text-align:center;
     width:30%;
     padding:20px;

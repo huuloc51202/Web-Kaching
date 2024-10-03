@@ -21,9 +21,7 @@ function AdminProduct() {
     const [typeSelect,setTypeSelect] = useState('')
 
     const searchInput = useRef(null);//tìm kiếm
-
-    const user = useSelector((state) => state?.user)
-    const [stateProduct, setStateProduct] = useState({
+    const inittial = () => ({
         name: '',
         image: '',
         typeimage: '',
@@ -34,18 +32,10 @@ function AdminProduct() {
         newType:''
     })
 
-    const [stateProductDetails, setStateProductDetails] = useState({
-        name: '',
-        image: '',
-        typeimage: '',
-        type: '',
-        price: '',
-        countInStock: '',
-        description: '',
-        newType:'',
-        discount:'',
-        soldOut:'',
-    })
+    const user = useSelector((state) => state?.user)
+    const [stateProduct, setStateProduct] = useState(inittial())
+
+    const [stateProductDetails, setStateProductDetails] = useState(inittial())
 
     const [form] = Form.useForm();
 
@@ -147,15 +137,19 @@ function AdminProduct() {
                 countInStock: res?.data?.countInStock,
                 description: res?.data?.description,
                 discount: res?.data?.discount,
-                soldOut: res?.data?.soldOut,
             })
         }
         
     }
 
     useEffect(() =>  {
-        form.setFieldsValue(stateProductDetails)
-    },[form, stateProductDetails])
+        if(!isModalOpen){
+
+            form.setFieldsValue(stateProductDetails)
+        }else{
+            form.setFieldsValue(inittial())
+        }
+    },[form, stateProductDetails, isModalOpen])
 
     useEffect(() =>{
         if(rowSelected && isOpenDrawer){
@@ -366,7 +360,6 @@ function AdminProduct() {
             countInStock: '',
             description: '',
             discount:'',
-            soldOut:'',
         })
         form.resetFields()
     }
@@ -445,13 +438,6 @@ function AdminProduct() {
         })
         
     };
-
-    // const handleSelectChange = (value) => {
-    //     setStateProduct({
-    //         ...stateProduct,
-    //         type: value
-    //     });
-    // };
 
     const handleSelectChangeDetails = (value) => {
         setStateProductDetails({
@@ -782,14 +768,6 @@ function AdminProduct() {
                         rules={[{  message: 'Please input your discount  of product!' }]}
                     >
                         <InputComponent value={stateProductDetails.discount} onChange={handleOnChangeDetails} name="discount" />
-                    </Form.Item>
-
-                    <Form.Item
-                        label=" Hết sản phẩm"
-                        name="soldOut"
-                        rules={[{  message: 'Please input your soldOut  !' }]}
-                    >
-                        <InputComponent value={stateProductDetails.soldOut} onChange={handleOnChangeDetails} name="soldOut" />
                     </Form.Item>
 
                     <Form.Item

@@ -84,7 +84,7 @@ const SliderComponent = ({ arrImages }) => {
             />
           )
         })}  */}
-        <SliderProComponent arrImages={[prod1, juicypink1, text1, heart1]} />
+        {/* <SliderProComponent arrImages={[prod1, juicypink1, text1, heart1]} /> */}
       </Slider>
     </div>
   );

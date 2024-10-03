@@ -1,7 +1,7 @@
-import { Col } from 'antd'
+
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { WrapperFooter } from './style'
+import { ColInner, WrapperCol, WrapperFooter } from './style'
 
 const FooterComponent = () => {
     const navigate = useNavigate()
@@ -14,41 +14,34 @@ const FooterComponent = () => {
 
     return (
         <div>
-            <WrapperFooter >
-                <Col  span={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
-                    
-                    <div class="col-inner" style={{marginBottom:'114px'}}>
+           <WrapperFooter >
+                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                    <ColInner class="col-inner" style={{marginBottom:'114px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}} >ABOUT US</h2>
                         <div class="footer-content" onClick={handleNavigateAU}>
                             <p class="text-uppercase" ><a style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>ABOUT US</a></p>
                         </div>
-                    </div>
-                    
-                </Col>
-                <Col  span={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
-                    <div class="col-inner" style={{marginBottom:'114px'}}>
+                    </ColInner>
+                </WrapperCol>
+                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                    <ColInner class="col-inner" style={{marginBottom:'114px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>INFORMATION</h2>
                         <div class="footer-content" onClick={handleNavigateCS}>
                             <p class="text-uppercase" ><a style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>CLIENT SERVICE</a></p>
                         </div>
-                    </div>
-                    
-                </Col>
-                <Col  span={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
-                    <div class="col-inner"  style={{marginBottom:'23px'}}>
+                    </ColInner>
+                </WrapperCol>
+                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                    <ColInner class="col-inner"  style={{marginBottom:'81px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>CONNECT</h2>
                         <div class="footer-content">
-                            <p class="text-uppercase" style={{color:'#fff',fontSize:'1.5rem'}}>INSTAGRAM</p>
-                            <p class="text-uppercase" ><a href="https://www.instagram.com/kaching.worldwide/" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>https://www.instagram.com/kaching.worldwide/</a></p>
-                            <p class="text-uppercase" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>FACEBOOK</p>
-                            <p class="text-uppercase" ><a href="https://www.facebook.com/kaching.by.chuchoa" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>https://www.facebook.com/kaching.by.chuchoa</a></p>
+                            <p class="text-uppercase" ><a href="https://www.instagram.com/kaching.worldwide/" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>INSTAGRAM</a></p>
+                            <p class="text-uppercase" ><a href="https://www.facebook.com/kaching.by.chuchoa" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>FACEBOOK</a></p>
                         </div>
-                        
-                    </div>
-                    
-                </Col>
-                <Col  span={6}>
-                    <div class="col-inner" style={{padding:'20px'}}>
+                    </ColInner>  
+                </WrapperCol>
+                <WrapperCol xs={24} sm={12} md={6}  style={{padding:'20px'}}>
+                    <ColInner class="col-inner"  style={{marginBottom:'16px'}}>
                         <div class="footer-content"  >
                             <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>CONTACT US</h2>
                             <p><a href="tel:0942201037" target="_blank" rel="noreferrer noopener" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>+84 942 201 037</a></p>
@@ -56,12 +49,10 @@ const FooterComponent = () => {
                             <p style={{color:'#fff',fontSize:'1.5rem'}}>EMAIL US</p>
                             <p><a href="mailto:stressmamastreetwear@gmail.com" style={{color:'#fff', margin:'0px',fontSize:'1.5rem'}}>kachingstreetwear@gmail.com</a></p>
                         </div>
-                    </div>
-
-                    
-                    
-                </Col>
+                    </ColInner>
+                </WrapperCol>
             </WrapperFooter>
+
             <div class="copyright" 
             style={{
                 backGround: '#fff',

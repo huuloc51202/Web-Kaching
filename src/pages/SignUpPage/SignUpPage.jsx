@@ -72,8 +72,8 @@ const SignUpPage = () => {
   }
 
   return (
-    <SignUp className="main-site main-childs signup container">
-      <UserWrapper className="user-wrapper">
+    <SignUp className="signup">
+      <UserWrapper  xs={24} sm={24} md={12} className="user-wrapper">
         <div className="user-nav anonymous-awe">
           <p className="active" rel="nofollow" style={{fontSize:'1.6rem',textDecoration:'uppercase',margin:'0 0 15px',fontWeight:'500'}}>Đăng ký</p>
 
@@ -138,7 +138,7 @@ const SignUpPage = () => {
               >Đăng ký</Btn>
             </div>
           </Loading>
-          <div className="user-foot d-flex" style={{fontSize:'1.5rem',cursor:'pointer'}}>
+          <div className="user-foot d-flex" style={{fontSize:'1.5rem',cursor:'pointer',justifyContent:'center'}}>
             <ClearFixA  className="clearfix" rel="nofollow" onClick={handleNavigateLogin}>Đăng nhập </ClearFixA>
               
           </div>

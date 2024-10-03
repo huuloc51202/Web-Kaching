@@ -1,6 +1,6 @@
 import { Menu } from 'antd'
 import React, { useState } from 'react'
-import { AppstoreOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import HeaderComponent from '../../components/HeaderComponent/HeaderComponent';
 import AdminUser from '../../components/AdminUser/AdminUser';
 import AdminProduct from '../../components/AdminProduct/AdminProduct';
@@ -22,7 +22,7 @@ const AdminPage = () => {
     },
     {
       key: 'order',
-      icon: <SettingOutlined />,
+      icon: <ShoppingCartOutlined />,
       label: 'Đơn hàng',
       
     },

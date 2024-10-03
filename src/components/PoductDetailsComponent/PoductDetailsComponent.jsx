@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { 
@@ -11,9 +11,10 @@ import {
         PrdDesContentP,
         PrdDesTitle,
         ProductAction, 
+        ProductActionCol, 
         ProductDescription, 
         ProductDetailName,
-        Qty, QtyInput, SizeSpan, SizeSpanA, SliderProImg, SliderProItem } from './style';
+        Qty, QtyInput, SizeSpan, SizeSpanA, SliderPro, SliderProCol, SliderProImg, SliderProItem } from './style';
 import './index.css';
 import prod1 from '../../assets/img/product/prod1.jpeg';
 import prod2 from '../../assets/img/product/prod2.jpeg';
@@ -25,10 +26,12 @@ import Loading from '../LoadingComponent/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { addOrderProduct } from '../../redux/slides/orderSlide';
-import { convertPrice } from '../../utils';
+import { convertPrice, getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils';
+import * as message from '../Message/Message'
 
 const ProductDetailsComponent = ({idProduct}) => {
     const user = useSelector((state) => state.user)
+    const [cartData, setCartData] = useState([]);
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch = useDispatch()
@@ -70,8 +73,10 @@ const ProductDetailsComponent = ({idProduct}) => {
 
     const [quantity, setQuantity] = useState(1)
     const handleIncrease = () => {
-        if(quantity <  14 ) {
+        if(quantity <  productDetails?.countInStock ) {
             setQuantity (quantity + 1);
+        }else {
+            alert(`Chỉ còn ${productDetails?.countInStock} sản phẩm trong kho.`);
         }
     }
 
@@ -98,35 +103,67 @@ const ProductDetailsComponent = ({idProduct}) => {
         enabled : !!idProduct,
     })
 
+    useEffect(() => {
+        if (user?.id) {
+            // Khi user thay đổi, lấy giỏ hàng từ localStorage
+            const cart = getCartFromLocalStorage(user.id);
+            setCartData(cart);
+        }
+    }, [user]);
     const handleAddOrderProduct = () => {
-        if(!user?.id){
-            navigate('/sign-in', {state: location?.pathname})
-        } else if (productDetails?.soldOut ) {
+        if (!user?.id) {
+            message.warning("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+            navigate('/sign-in', { state: location?.pathname });
+        } else if (productDetails?.soldOut) {
             // Nếu sản phẩm đã hết hàng hoặc chưa chọn kích thước, không thực hiện thêm sản phẩm
             return; // Có thể hiển thị thông báo hoặc xử lý lỗi ở đây nếu cần
-        }else{
-           
-            dispatch(addOrderProduct({
-                orderItem: {
-                    name: productDetails?.name,
-                    size: selectedSize,
-                    amount: quantity,
-                    image: productDetails?.image,
-                    price: productDetails?.price,
-                    discount: productDetails?.discount,
-                    product: productDetails?._id,
+        } else {
+            // Tạo đối tượng sản phẩm mới
+            const newProduct = {
+                name: productDetails?.name,
+                size: selectedSize,
+                amount: quantity,
+                image: productDetails?.image,
+                price: productDetails?.price,
+                discount: productDetails?.discount,
+                product: productDetails?._id,
+            };
+    
+            // Cập nhật giỏ hàng
+            const updatedCart = cartData.map(item => {
+                if (item.product === newProduct.product && item.size === newProduct.size) {
+                    // Cập nhật số lượng cho sản phẩm đã tồn tại
+                    return { ...item, amount: item.amount + newProduct.amount };
                 }
-            }))
+                return item;
+            });
+    
+            // Nếu sản phẩm không có trong giỏ hàng, thêm mới vào giỏ hàng
+            if (!updatedCart.some(item => item.product === newProduct.product && item.size === newProduct.size)) {
+                updatedCart.push(newProduct);
+            }
+    
+            setCartData(updatedCart);
+    
+            // Lưu giỏ hàng vào localStorage
+            saveCartToLocalStorage(user.id, updatedCart);
+    
+            // Gửi sản phẩm vào Redux store nếu cần
+            dispatch(addOrderProduct({ orderItem: newProduct }));
+    
+            message.success("Sản phẩm đã được thêm vào giỏ hàng.");
         }
-    }
+    };
+    
+    
 
     
     return (
         <div>
             <Loading isPending={isLoading}>
                 <Row>
-                    <Col span={12} style={{ padding: '40px 15px', borderRight: '1px solid #000' }}>
-                        <div className="slider-pro" style={{ padding: '0 175px' }}>
+                    <SliderProCol xs={24} sm={12} md={12} >
+                        <SliderPro className="slider-pro" >
                             <SliderProItem className="slider-pro__item">
                                 <a href="#" className="slider-pro__link">
                                     {/* src={images[currentIndex]} */}
@@ -153,10 +190,10 @@ const ProductDetailsComponent = ({idProduct}) => {
                                     </Col>
                                 ))}
                             </Row>
-                        </div>
-                    </Col>
-                    <Col span={12}>
-                        <div style={{maxHeight:'850px', overflowY:'auto'}}>
+                        </SliderPro>
+                    </SliderProCol>
+                    <Col xs={24} sm={12} md={12}>
+                        <ProductActionCol >
                             <ProductAction className="product-action">
                                 <ProductDetailName className="product-detail-name tp_product_detail_name">{productDetails?.name}</ProductDetailName>
                                 <div className="product-detail-price" style={{marginTop:'25px'}}>
@@ -174,7 +211,7 @@ const ProductDetailsComponent = ({idProduct}) => {
                                         </p>
                                     </div> */}
                                     <div className="sizePicker clearfix" style={{margin:'40px 0 30px'}}>
-                                        <p className="size req row row-cols-6 justify-content-center" style={{margin: '0 0 16px'}}>
+                                        <p className=" justify-content-center" style={{margin: '0 0 16px'}}>
                                             {['S', 'M', 'L', 'XL'].map((size) => (
                                             <SizeSpan key={size}>
                                                 <SizeSpanA
@@ -191,7 +228,7 @@ const ProductDetailsComponent = ({idProduct}) => {
                                     </div>
                                 </div>
                                 <div className="product-detail-action" style={{margin:'25px'}}>
-                                    <div className="qty-wrapper d-flex justify-content-center">
+                                    <div className="qty-wrapper ">
                                         <Qty className="qty-down" onClick={handleDecrease}>-</Qty>
                                         
                                         <QtyInput
@@ -208,14 +245,14 @@ const ProductDetailsComponent = ({idProduct}) => {
                                     <AddCartButton 
                                         id="add-to-cart" 
                                         className="btnAddToCart btnAtc btn-outline tp_button" 
-                                        onClick={handleAddOrderProduct} 
+                                        onClick={productDetails?.countInStock > 0 ? handleAddOrderProduct : null}  // Ngăn sự kiện khi hết hàng
                                         style={{
-                                            backgroundColor: productDetails?.soldOut ? '#ccc' : '#000', 
-                                            cursor: productDetails?.soldOut ? 'not-allowed' : 'pointer',
+                                            backgroundColor: productDetails?.countInStock === 0 ? '#ccc' : '#000', 
+                                            cursor: productDetails?.countInStock === 0 ? 'not-allowed' : 'pointer',
                                         }}
                                     >
                                         <span style={{ fontSize: '14px', textTransform: 'uppercase', color: '#fff' }}>
-                                        {productDetails?.soldOut ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
+                                            {productDetails?.countInStock === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
                                         </span>
                                     </AddCartButton>
                                                 
@@ -228,18 +265,18 @@ const ProductDetailsComponent = ({idProduct}) => {
                                 </PrdDesTitle>
                                 <PrdDesContent className="prd-des-content">
                                     <figure className="image">
-                                        <img src={productDetails?.typeimage}  style={{ maxWidth:'500px'}}/>
+                                        <img src={productDetails?.typeimage}  style={{ maxWidth:'100%'}}/>
                                     </figure>
                                     
                                     <PrdDesContentP style={{textAlign:'center'}}>
                                         {productDetails?.description}
                                         
                                     </PrdDesContentP>
-                                                    
+                                    {/* <LikeButtonComponent dataHref="https://www.facebook.com/kaching.by.chuchoa" /> */}
                                 </PrdDesContent>
                             </ProductDescription>
                             
-                        </div>
+                        </ProductActionCol>
                     </Col>
                 </Row>
 

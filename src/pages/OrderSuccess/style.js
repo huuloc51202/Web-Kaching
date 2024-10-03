@@ -10,6 +10,39 @@ export const Title = styled.h1`
 
 `
 
+export const TableHeading = styled.div`
+    display: flex;
+    align-items: center;
+    @media (max-width: 521px) {
+        display: block;
+    }
+`
+
+export const TableShare = styled.span`
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 12px 0px;
+    color: #333;
+`
+
+export const ThumbCartH4 = styled.h4`
+    
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #000;
+    margin: 0px 0px 10px;
+    padding-top: 30px;
+`
+export const ThumbCartSpan = styled.span`
+    
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #000;
+`
+
+
 export const CategoryTotal = styled.div`
     border-bottom: 1px solid #eee;
     display: flex;
@@ -42,23 +75,6 @@ export const PayTotal = styled.div`
     position: absolute;
     left: 50px;
     top: 25px;
-
-`
-
-export const PayTotal2 = styled.div`
-    font-size: 1.6rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: #fff;
-    background: #000;
-    padding: 0px 30px;
-    line-height: 2;
-    display: inline-block;
-    border-radius: 50px;
-    text-transform: uppercase;
-    position: absolute;
-    left: 17px;
-    top: 35px;
 
 `
 

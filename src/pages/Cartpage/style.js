@@ -1,3 +1,4 @@
+import { Col } from "antd";
 import styled from "styled-components";
 
 export const Title = styled.h1`
@@ -10,9 +11,12 @@ export const Title = styled.h1`
 `
 export const TableHeading = styled.div`
     display: flex;
-    
+    justify-content: space-between;
     border-top: 1px solid #000000;
     align-items: center;
+    @media (max-width: 521px) {
+        display: block;
+    }
 `
 
 export const TableShare = styled.span`
@@ -52,9 +56,9 @@ export const QtyInput = styled.input`
     border: 1px solid #000;
     border-right: none;
     border-left: none;
-    padding-left: 14px;
-    width: 30px;
-    height: 26px;
+    padding-left: 7px;
+    width: 42px;
+    height: 29px;
     text-align: center;
 `
 
@@ -99,11 +103,24 @@ export const PayTotal = styled.div`
     background: #000;
     padding: 0px 30px;
     line-height: 3;
-    display: inline-block;
+    display: inline-block;  
     border-radius: 50px;
     text-transform: uppercase;
     position: absolute;
     left: 50px;
     top: 25px;
 
+`
+
+export const ProductCart =styled.div`
+    @media (max-width: 1024px) {
+        flex-direction: column;
+    }
+`
+
+export const ColTable = styled(Col)`
+    display: flex;
+    justify-content: center;
+    
+    
 `

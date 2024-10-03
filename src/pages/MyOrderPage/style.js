@@ -1,4 +1,3 @@
-import { Row } from "antd";
 import styled from "styled-components";
 
 export const Title = styled.h1`
@@ -9,6 +8,39 @@ export const Title = styled.h1`
     font-weight: 500;
 
 `
+
+export const TableHeading = styled.div`
+    display: flex;
+    align-items: center;
+    @media (max-width: 521px) {
+        display: block;
+    }
+`
+
+export const TableShare = styled.span`
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 12px 0px;
+    color: #333;
+`
+
+export const ThumbCartH4 = styled.h4`
+    
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #000;
+    margin: 0px 0px 10px;
+    padding-top: 30px;
+`
+export const ThumbCartSpan = styled.span`
+    
+    font-size: 1.6rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #000;
+`
+
 
 export const CategoryTotal = styled.div`
     border-bottom: 1px solid #eee;
@@ -35,30 +67,14 @@ export const PayTotal = styled.div`
     color: #fff;
     background: #000;
     padding: 0px 30px;
-    line-height: 3;
-    display: inline-block;
-    border-radius: 50px;
-    text-transform: uppercase;
-    position: absolute;
-    left: 50px;
-    top: 25px;
-
-`
-
-export const PayTotal2 = styled.div`
-    font-size: 1.6rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: #fff;
-    background: #000;
-    padding: 0px 30px;
     line-height: 2;
     display: inline-block;
     border-radius: 50px;
     text-transform: uppercase;
-    position: absolute;
-    left: 17px;
-    top: 35px;
+    text-align: center;
+    @media (max-width: 522px) {
+       margin-bottom: 5px;
+    }
 
 `
 
@@ -97,7 +113,10 @@ export const RadioContentInput = styled.div`
 
 `
 
-export const ProductCart = styled(Row)`
-    display: flex;
-    
+export const SectionContent  = styled.div`
+    display:flex;
+    justify-content:space-evenly;
+    @media (max-width: 522px) {
+        display: block;
+    }
 `

@@ -1,14 +1,15 @@
 import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ClientService = () => {
     return (
         <div>
-            <div className="body-news" style={{marginTop:'60px',height:'100px',minHeight:'100vh'}}>
+            <div className="body-news" style={{marginTop:'60px',minHeight:'100vh'}}>
     
                 <div className="client-service-wrap">
-                    <div className="container" style={{marginRight:'132px',marginLeft:'132px',padding:'0 15px',display:'flex',justifyContent:'center'}}>
-                        <div className="row justify-content-center" style={{maxWidth:'70%'}}>
-                            <div className="col-lg-8 col-md-8 col-12">
+                    <div className="container" >
+                        <div className="row justify-content-center" >
+                            <div  className="col-lg-12 col-md-12 col-12">
                                 <div className="client-service-inner" 
                                     style={{
                                         borderRight:'1px solid #000',

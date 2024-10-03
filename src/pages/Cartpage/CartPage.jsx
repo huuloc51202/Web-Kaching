@@ -1,18 +1,20 @@
-import { Button, Col, Form, Image } from 'antd'
+import {  Col, Form } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
-import { ButtonTotal, CartContinue, CategoryTotal, PayTotal, Qty, QtyInput, TableHeading, TableShare, ThumbCartH4, ThumbCartSpan, Title } from './style'
+import { ButtonTotal, CartContinue, CategoryTotal, ColTable, PayTotal, ProductCart, Qty, QtyInput, TableHeading, TableShare, ThumbCartH4, ThumbCartSpan, Title } from './style'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearOrder, decreaseAmount, increaseAmount, removeOrderProduct } from '../../redux/slides/orderSlide';
-import { convertPrice, getBase64 } from '../../utils';
+import { convertPrice, getCartFromLocalStorage, saveCartToLocalStorage } from '../../utils';
 import ModalComponent from '../../components/ModalComponent/ModalComponent';
 import InputComponent from '../../components/InputComponent/InputComponent';
 import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
 import { updateUser } from '../../redux/slides/userSlide';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
+import emptyCart from '../../assets/img/slides/emptycart.webp'
+import { updateOrder } from '../../redux/slides/orderSlide';
 
 const CartPage = () => {
     const order = useSelector((state) => state.order)
@@ -46,8 +48,6 @@ const CartPage = () => {
     )
 
     const { data} = mutationUpdate
-    console.log('data',data)
-
     const dispatch = useDispatch()
 
     useEffect(() =>  {
@@ -66,6 +66,20 @@ const CartPage = () => {
         }
     },[isOpenModalUpdateInfo])
 
+    useEffect(() => {
+        if (user?.id) {
+            const storedCart = getCartFromLocalStorage(user?.id);
+            dispatch(updateOrder(storedCart)); // Cập nhật giỏ hàng từ localStorage
+        }
+    }, [user?.id]);
+
+    useEffect(() => {
+        if (order?.orderItems) {
+            saveCartToLocalStorage(user?.id, order.orderItems);
+        }
+    }, [order?.orderItems]);
+
+
     const handleChangeAddress = () => {
         setIsOpenModalUpdateInfo(true)
     }
@@ -81,7 +95,7 @@ const CartPage = () => {
 
     // Phí Ship
     const diliveryPriceMemo = useMemo(() => {
-        if(priceMemo > 280000){
+        if(priceMemo >= 280000){
             return 0
         }else if(priceMemo === 0){
             return  0
@@ -95,20 +109,34 @@ const CartPage = () => {
      },[priceMemo,diliveryPriceMemo])
     //
 
-    const handleChangeCount = (type,idProduct,size) => {
+    const handleChangeCount = (type,idProduct,size,limited) => {
         if(type === 'increase'){
-            dispatch(increaseAmount({idProduct,size}))
+            if(!limited){
+
+                dispatch(increaseAmount({idProduct,size}))
+            }
         }else{
-            dispatch(decreaseAmount({idProduct,size}))
+            if(!limited){
+
+                dispatch(decreaseAmount({idProduct,size}))
+            }
         }
+
+        saveCartToLocalStorage(user?.id, order?.orderItems);
     }
 
-    const handlDeleteOrder = (idProduct,size) => {
-        dispatch(removeOrderProduct({idProduct,size}))
-    }
+    const handlDeleteOrder = (idProduct, size) => {
+        dispatch(removeOrderProduct({ idProduct, size }));
+        const updatedOrderItems = order?.orderItems?.filter(
+            (item) => !(item.product === idProduct && item.size === size)
+        );
+        saveCartToLocalStorage(user?.id, updatedOrderItems);
+    };
+    
 
     const handleClearCart = () => {
         dispatch(clearOrder())
+        saveCartToLocalStorage(user?.id, []);
     }
 
    
@@ -125,6 +153,10 @@ const CartPage = () => {
         }else{
             navigate('/cart/payment')
         }
+    }
+
+    const handleHome = () => {
+        navigate('/')
     }
 
     const handleCancelUpdate =  () => {
@@ -164,146 +196,170 @@ const CartPage = () => {
                             <Title className="titlet">GIỎ HÀNG</Title>
                             
                         </div>
-
+                        
 
                     </div>     
                     
                     {/* <!-- body --> */}
-                    <div className="product-cart" style={{display:'flex'}}>  
+                    <ProductCart className="product-cart" style={{}}>
+                        {order?.orderItems?.length === 0 ? (
+                            <Col xs={24} sm={24} md={24} style={{textAlign:'center'}}>
+                                <div className="table__no-cart" > 
+                                    <img src={emptyCart} alt="" class="no-cart__img"style={{width:'400px'}}/>
+                                    <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+                                </div>
+                                <div className="button-cart" style={{padding: '20px 0px'}}>
+                                    <CartContinue onClick={handleHome} className="cart-continue ">  
+                                        Tiếp tục  mua  sắm
+                                    </CartContinue>
+                                </div>
+                                
+                            </Col>  
                         
-                        <Col span={18} style={{paddingLeft:'0px'}}>
-                            <div className="table-cart" >
-                                <div className="table__product" style={{marginBottom: '20px',borderBottom: '1px solid #eee'}}>
-                                    <thead>
-                                        <TableHeading className="table-heading">
-                                            <TableShare  className="table-share table-product" style={{width: '392px'}}>Sản phẩm</TableShare >
-                                            <TableShare  className="table-share table-qty" style={{width: '212px'}}>Số lượng</TableShare >
-                                            <TableShare  className="table-share table-linePrice" style={{width: '119px'}}>Thành tiền</TableShare >
-                                            <TableShare  className="table-share table-remove" style={{width: '42px'}}>Xóa</TableShare >
-                                        </TableHeading>
-                                    </thead>
+                        ) : (
+                            <>
+                                <ColTable xs={24} sm={24} md={24}  >
+                                    <div className="table-cart" >
+                                        <div className="table__product" style={{marginBottom: '20px',borderBottom: '1px solid #eee'}}>
+                                            {/* <thead>
+                                                <TableHeading className="table-heading">
+                                                    <TableShare  className="table-share table-product" style={{width: '392px'}}>Sản phẩm</TableShare >
+                                                    <TableShare  className="table-share table-qty" style={{width: '212px'}}>Số lượng</TableShare >
+                                                    <TableShare  className="table-share table-linePrice" style={{width: '119px'}}>Thành tiền</TableShare >
+                                                    <TableShare  className="table-share table-remove" style={{width: '42px'}}>Xóa</TableShare >
+                                                </TableHeading>
+                                            </thead> */}
 
-                                    <tbody>
-                                        <div id="pro-table">
-                                            {order?.orderItems?.map((order) => {
-                                                const price = order?.price || 0;
-                                                const amount = order?.amount || 0;
-                                                const discount = order?.discount || 0;
-                                                return (
+                                            <tbody>
+                                                <div id="pro-table">
+                                                    {order?.orderItems?.map((order) => {
+                                                        const price = order?.price || 0;
+                                                        const amount = order?.amount || 0;
+                                                        const discount = order?.discount || 0;
+                                                        return (
 
-                                                    <TableHeading className="table-heading">
-                                                        <TableShare className="table-share table-product" style={{width: '392px'}}>
-                                                            <a  style={{textDecoration:'none'}}>
-                                                                <div className="thumb-cart" style={{display:'flex'}}>
-                                                                    <img src={order?.image} alt="" style={{width : '150px' ,marginRight: '15px'}}/>
-                                                                    <div className="thumb-cart__item" style={{width : '125px' }}>
-                                                                        <ThumbCartH4 > {order?.name} </ThumbCartH4 >
-                                                                        <ThumbCartSpan className="variant-title" > {order?.size} </ThumbCartSpan>
-                                                                        <ThumbCartSpan>{order?.price?.toLocaleString()}₫</ThumbCartSpan>
+                                                            <TableHeading className="table-heading">
+                                                                <TableShare  className="table-share table-product" >
+                                                                    <a  style={{textDecoration:'none'}}>
+                                                                        <div className="thumb-cart" style={{display:'flex'}}>
+                                                                            <img src={order?.image} alt="" style={{width : '150px' ,marginRight: '15px'}}/>
+                                                                            <div className="thumb-cart__item" style={{width : '125px' }}>
+                                                                                <ThumbCartH4 > {order?.name} </ThumbCartH4 >
+                                                                                <ThumbCartSpan className="variant-title" > {order?.size} </ThumbCartSpan>
+                                                                                <ThumbCartSpan>{order?.price?.toLocaleString()}₫</ThumbCartSpan><br></br>
+                                                                                {discount > 0 && <ThumbCartSpan>-{discount}%</ThumbCartSpan>}
+                                                                            </div>
+                                                                        </div>
+                                                                    </a>
+                                                                </TableShare>
+                                                                <TableShare   className="table-share table-qty" style={{marginRight:'5px'}} >
+                                                                    <div className="qty-number">
+
+                                                                        <Qty className="qty-down" onClick={() => handleChangeCount('decrease',order?.product,order?.size, order?.amount === 1)}  >-</Qty>
+                                                    
+                                                                        <QtyInput
+                                                                            defaultValue={order?.amount}
+                                                                            type="number"
+                                                                            id="pquantity"
+                                                                            className="qty-input"
+                                                                            value={order?.amount}
+                                                                            min={1} 
+                                                                            max={order?.countInStock}
+                                                                            readOnly
+                                                                        />
+                                                                        <Qty className="qty-up" onClick={() => handleChangeCount('increase',order?.product,order?.size, order?.amount === order.countInStock)}  >+</Qty>
+                                                                        
+                                                                        
+                                                                    
                                                                     </div>
-                                                                </div>
-                                                            </a>
-                                                        </TableShare>
-                                                        <TableShare className="table-share table-qty" style={{width: '212px'}}>
-                                                            <div className="qty-number">
+                                                                </TableShare>
+                                                                <b  className="table-share table-linePrice" style={{marginRight:'5px'}}> 
+                                                                    {convertPrice(
+                                                                        (price * amount) - 
+                                                                        ((price * amount) * (discount / 100))
+                                                                    )}₫
+                                                                </b>
+                                                                <TableShare  className="table-share table-remove">
+                                                                    <DeleteOutlined style={{cursor:'pointer'}}  onClick={() => handlDeleteOrder(order?.product, order?.size)} />
+                                                                    
+                                                                </TableShare>
+                                                            </TableHeading>
+                                                        )
 
-                                                                <Qty className="qty-down" onClick={() => handleChangeCount('decrease',order?.product,order?.size)}>-</Qty>
-                                            
-                                                                <QtyInput
-                                                                    type="number"
-                                                                    id="pquantity"
-                                                                    className="qty-input"
-                                                                    value={order?.amount}
-                                                                    min="1"
-                                                                    max="14"
-                                                                    readOnly
-                                                                />
-                                                                <Qty className="qty-up" onClick={() => handleChangeCount('increase',order?.product,order?.size)}>+</Qty>
-                                                                
-                                                                
-                                                            
-                                                            </div>
-                                                        </TableShare>
-                                                        <b className="table-share table-linePrice"  style={{width: '119px'}}> 
-                                                            {convertPrice(
-                                                                (price * amount) - 
-                                                                ((price * amount) * (discount / 100))
-                                                            )}₫
-                                                        </b>
-                                                        <TableShare className="table-share table-remove"style={{width: '42px'}}>
-                                                            <DeleteOutlined style={{cursor:'pointer'}}  onClick={() => handlDeleteOrder(order?.product, order?.size)} />
-                                                            
-                                                        </TableShare>
-                                                    </TableHeading>
-                                                )
+                                                    })}
 
-                                            })}
-
+                                                </div>
+                                                
+                                            </tbody>
                                         </div>
                                         
-                                    </tbody>
-                                </div>
-                                
-                                
-                                <div className="row" style={{justifyContent:'space-around',display:'flex'}}>
+                                        
+                                        <div className="" >
 
-                                    <div className="button-cart" style={{padding: '20px 0px'}}>
-                                        <CartContinue href="/" className="cart-continue ">  
-                                            Tiếp tục  mua  sắm
-                                        </CartContinue>
+                                            <div className="button-cart" style={{padding: '20px 0px'}}>
+                                                <CartContinue onClick={handleHome} className="cart-continue ">  
+                                                    Tiếp tục  mua  sắm
+                                                </CartContinue>
+                                            </div>
+
+                                            <div className="button-cart" style={{padding: '20px 0px'}}>
+                                                <CartContinue className="cart-continue " onClick={handleClearCart} style={{cursor : 'pointer'}}>  
+                                                    Xoá tất cả sản phẩm
+                                                </CartContinue>
+                                            </div>
+                                        </div>
                                     </div>
+                                </ColTable>
+                                <Col  xs={24} sm={24} md={24} style={{marginLeft:'30px'}}>
+                                    <nav className="category">
+                                        <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
+                                            <CategoryTotal className="category-total">
+                                                Địa chỉ:
+                                                <b className="total-cate" id="total-cate" style={{fontSize:'12px'}}>{`${user?.address} ${user?.city}`}</b>
+                                            </CategoryTotal>
+                                            <ButtonTotal className="button-total">
+                                                <PayTotal  className="pay-total"  onClick={handleChangeAddress} style={{cursor:'pointer'}}>
+                                                    Thay đổi
+                                                </PayTotal>
+                                            </ButtonTotal>
+                                        </div>  
+                                        <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
+                                            <CategoryTotal className="category-total">
+                                                Tạm tính
+                                                <b className="total-cate" id="total-cate">{convertPrice(priceMemo)}₫</b>
+                                            </CategoryTotal>
+                                            <CategoryTotal className="category-total">
+                                                
+                                                <span >Mua hàng trên 280.000₫ được FreeShip :3</span>
+                                            </CategoryTotal>
+                                            <CategoryTotal className="category-total">
+                                                Phí vận chuyển
+                                                <b className="total-cate" id="total-cate">{convertPrice(diliveryPriceMemo)}₫</b>
+                                            
+                                            </CategoryTotal>
+                                            
+                                            <CategoryTotal className="category-total">
+                                                Tổng tiền
+                                                <b className="total-cate" id="total-cate">{convertPrice(totalPriceMemo)}₫</b>
+                                            </CategoryTotal>
 
-                                    <div className="button-cart" style={{padding: '20px 0px'}}>
-                                        <CartContinue className="cart-continue " onClick={handleClearCart} style={{cursor : 'pointer'}}>  
-                                            Xoá tất cả sản phẩm
-                                        </CartContinue>
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col span={6} style={{marginLeft:'30px'}}>
-                            <nav className="category">
-                                <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
-                                    <CategoryTotal className="category-total">
-                                        Địa chỉ:
-                                        <b className="total-cate" id="total-cate" style={{fontSize:'12px'}}>{`${user?.address} ${user?.city}`}</b>
-                                    </CategoryTotal>
-                                    <ButtonTotal className="button-total">
-                                        <PayTotal  className="pay-total"  onClick={handleChangeAddress} style={{cursor:'pointer'}}>
-                                            Thay đổi
-                                        </PayTotal>
-                                    </ButtonTotal>
-                                </div>
-                                <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
-                                    <CategoryTotal className="category-total">
-                                        Tạm tính
-                                        <b className="total-cate" id="total-cate">{convertPrice(priceMemo)}₫</b>
-                                    </CategoryTotal>
+                                            <ButtonTotal className="button-total" >
+                                                <PayTotal  className="pay-total" onClick={() => handleAddCard()}  style={{cursor:'pointer'}}>
+                                                    Thanh toán
+                                                </PayTotal>
+                                            </ButtonTotal>
 
-                                    <CategoryTotal className="category-total">
-                                        Phí vận chuyển
-                                        <b className="total-cate" id="total-cate">{convertPrice(diliveryPriceMemo)}₫</b>
-                                    </CategoryTotal>
-                                    
-                                    <CategoryTotal className="category-total">
-                                        Tổng tiền
-                                        <b className="total-cate" id="total-cate">{convertPrice(totalPriceMemo)}₫</b>
-                                    </CategoryTotal>
+                                        </div>
 
-                                    <ButtonTotal className="button-total" >
-                                        <PayTotal  className="pay-total" onClick={() => handleAddCard()}  style={{cursor:'pointer'}}>
-                                            Thanh toán
-                                        </PayTotal>
-                                    </ButtonTotal>
+                                        
 
-                                </div>
-
+                                    </nav>
+                                </Col>
                                 
-
-                            </nav>
-                        </Col>
+                            </>
+                        )}
                         
-                    </div>
+                    </ProductCart>
 
                     
                 </div>
