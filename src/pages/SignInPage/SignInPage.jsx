@@ -49,10 +49,10 @@ const SignInPage = () => {
         
         // Giải mã access token và lấy ID người dùng
         if (data?.access_token) {
-            const decoded = jwtDecode(data?.access_token);
-            if (decoded?.id) {
-                handleGetDetailsUser(decoded?.id, data?.access_token); // Gọi hàm để lấy chi tiết người dùng
-            }
+          const decoded = jwtDecode(data?.access_token);
+          if (decoded?.id) {
+              handleGetDetailsUser(decoded?.id, data?.access_token); // Gọi hàm để lấy chi tiết người dùng
+          }
         }
     } else if (isError && data?.status === 'ERR') {
         message.error('Đăng nhập thất bại');
@@ -62,21 +62,15 @@ const SignInPage = () => {
 
   
   const handleGetDetailsUser = async (id, token) => {
-    try {
-      const storage = localStorage.getItem('refresh_token');
-      const refreshToken = JSON.parse(storage);
-      const res = await UserService.getDetailsUser(id, token);
-      console.log('User details response:', res); // Ghi log phản hồi
-
-      // Dispatch action updateUser với dữ liệu nhận được
-      dispatch(updateUser({
-          ...res?.data,
-          access_token: token,
-          refreshToken
-      }));
-    } catch (error) {
-        console.error('Error fetching user details:', error);
-    }
+    const storage = localStorage.getItem('refresh_token');
+    const refreshToken = JSON.parse(storage);
+    const res = await UserService.getDetailsUser(id, token);
+    // Dispatch action updateUser với dữ liệu nhận được
+    dispatch(updateUser({
+        ...res?.data,
+        access_token: token,
+        refreshToken
+    }));
   };
 
 

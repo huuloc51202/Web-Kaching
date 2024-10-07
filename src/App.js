@@ -23,9 +23,9 @@ function App() {
     },[])
 
   const handleDecoded = () => {
-    let storageData = localStorage.getItem('access_token')
+    let storageData =user?.access_token || localStorage.getItem('access_token')
     let decoded = {}
-    if(storageData && isJsonString(storageData)){
+    if(storageData && isJsonString(storageData) && !user?.access_token){
       storageData = JSON.parse(storageData)
       decoded = jwtDecode(storageData)
       
@@ -58,7 +58,7 @@ function App() {
     let storageRefreshToken =localStorage.getItem('refresh_token')
     const refreshToken = JSON.parse(storageRefreshToken)
     const res = await UserService.getDetailsUser(id, token)
-    dispatch(updateUser({...res?.data, access_token: token,refreshToken: refreshToken}))
+    dispatch(updateUser({ ...res?.data, access_token: token,refreshToken: refreshToken}))
   }
 
   return (

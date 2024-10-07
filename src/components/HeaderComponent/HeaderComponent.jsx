@@ -21,6 +21,7 @@ const HeaderComponent = ({isHiddenMenu = false, isHiddenSearch = false, isHidden
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector((state) => state.user)
+    console.log('user',user)
     const [userName, setUserName] = useState('')
     const [userAvatar, setUserAvatar] = useState('')
     const [search, setSearch] = useState('')

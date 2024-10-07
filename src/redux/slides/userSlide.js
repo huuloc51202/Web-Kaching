@@ -39,6 +39,7 @@ export const userSlice = createSlice({
       state.access_token = '';
       state.isAdmin = false;
       state.city = '';
+      state.refreshToken = '';
     },
   }
 })
