@@ -34,35 +34,52 @@ const SignInPage = () => {
   
   const dispatch = useDispatch()
   const {data, isSuccess ,isError} = mutation
-  useEffect(() =>{
-    if(isSuccess && data?.status !== 'ERR'){
-      message.success('Đăng nhập thành công');
-      if(location?.state){
-        navigate(location?.state)
-      }else{
-
-        navigate('/')
-      }
-      localStorage.setItem('access_token', JSON.stringify(data?.access_token))
-      localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
-      if(data?.access_token){
-        const decoded = jwtDecode(data?.access_token)
-        if(decoded?.id){
-          handleGetDetailsUser(decoded?.id, data?.access_token)
+  useEffect(() => {
+    if (isSuccess && data?.status !== 'ERR') {
+        message.success('Đăng nhập thành công');
+        if (location?.state) {
+            navigate(location?.state);
+        } else {
+            navigate('/');
         }
-      }
-    }else if(isError && data?.status === 'ERR'){
-      message.error('Đăng nhập thất bại');
+        
+        // Lưu token vào localStorage
+        localStorage.setItem('access_token', JSON.stringify(data?.access_token));
+        localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token));
+        
+        // Giải mã access token và lấy ID người dùng
+        if (data?.access_token) {
+            const decoded = jwtDecode(data?.access_token);
+            if (decoded?.id) {
+                handleGetDetailsUser(decoded?.id, data?.access_token); // Gọi hàm để lấy chi tiết người dùng
+            }
+        }
+    } else if (isError && data?.status === 'ERR') {
+        message.error('Đăng nhập thất bại');
     }
-  }, [isSuccess,isError])
+  }, [isSuccess, isError]);
+
 
   
-  const handleGetDetailsUser = async (id, token) =>{
-    const storage = localStorage.getItem('refresh_token')
-    const refreshToken  = JSON.parse(storage)
-    const res = await UserService.getDetailsUser(id, token)
-    dispatch(updateUser({...res?.data, access_token: token, refreshToken}))
-  }
+  const handleGetDetailsUser = async (id, token) => {
+    try {
+      const storage = localStorage.getItem('refresh_token');
+      const refreshToken = JSON.parse(storage);
+      const res = await UserService.getDetailsUser(id, token);
+      console.log('User details response:', res); // Ghi log phản hồi
+
+      // Dispatch action updateUser với dữ liệu nhận được
+      dispatch(updateUser({
+          ...res?.data,
+          access_token: token,
+          refreshToken
+      }));
+    } catch (error) {
+        console.error('Error fetching user details:', error);
+    }
+  };
+
+
 
 
   const [email, setEmail] = useState('')
