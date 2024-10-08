@@ -21,14 +21,14 @@ export const SliderPro = styled.div`
 
 export const SliderProItem = styled.div`
 
-    height: 80%;
+    
     margin-bottom: 15px;
     position: relative;
 `
 
 export const SliderProImg = styled.img`
 
-    width: 100%;
+    max-width: 100%;
     height: 85%;
     cursor: pointer;
 
