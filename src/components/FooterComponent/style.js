@@ -8,12 +8,16 @@ export const WrapperFooter = styled(Row)`
 `
 
 export const WrapperCol = styled(Col)`
+    padding: 20px;
+    border-right: 1px solid #fff;  
     @media (max-width: 768px) {
         border-bottom:1px solid #fff
     };
 
     @media (max-width: 576px) {
-        border-bottom:1px solid #fff
+        padding: 10px;
+        border-bottom:1px solid #fff;
+        border-right: 1px solid #000;  
     };
 `
 

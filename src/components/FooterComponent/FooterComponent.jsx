@@ -15,7 +15,7 @@ const FooterComponent = () => {
     return (
         <div>
            <WrapperFooter >
-                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                <WrapperCol xs={24} sm={12} md={6} >
                     <ColInner class="col-inner" style={{marginBottom:'114px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}} >ABOUT US</h2>
                         <div class="footer-content" onClick={handleNavigateAU}>
@@ -23,7 +23,7 @@ const FooterComponent = () => {
                         </div>
                     </ColInner>
                 </WrapperCol>
-                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                <WrapperCol xs={24} sm={12} md={6} >
                     <ColInner class="col-inner" style={{marginBottom:'114px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>INFORMATION</h2>
                         <div class="footer-content" onClick={handleNavigateCS}>
@@ -31,7 +31,7 @@ const FooterComponent = () => {
                         </div>
                     </ColInner>
                 </WrapperCol>
-                <WrapperCol xs={24} sm={12} md={6} style={{padding:'20px',borderRight:'1px solid #fff'}}>
+                <WrapperCol xs={24} sm={12} md={6} >
                     <ColInner class="col-inner"  style={{marginBottom:'81px'}}>
                         <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>CONNECT</h2>
                         <div class="footer-content">
@@ -40,7 +40,7 @@ const FooterComponent = () => {
                         </div>
                     </ColInner>  
                 </WrapperCol>
-                <WrapperCol xs={24} sm={12} md={6}  style={{padding:'20px'}}>
+                <WrapperCol xs={24} sm={12} md={6} >
                     <ColInner class="col-inner"  style={{marginBottom:'16px'}}>
                         <div class="footer-content"  >
                             <h2 class="footer-title" style={{color:'#fff', margin:'0px 0px 8px', fontSize:'1.5rem', fontWeight:'600'}}>CONTACT US</h2>

@@ -17,32 +17,58 @@ html{
   border: 0;
 }
 
+/* Căn chỉnh dots theo chiều dọc */
+.slick-dots {
+  position: absolute;
+  left: 30px; /* Đặt dots ở bên phải hoặc tùy chọn vị trí */
+  top: 50%;
+  transform: translateY(-50%); /* Căn giữa dots theo chiều dọc */
+  display: flex;
+  flex-direction: column; /* Hiển thị các dots theo chiều dọc */
+}
+
 .slick-dots li {
   position: relative;
-  display: inline;
+  display: block; /* Chuyển từ inline sang block để các dots xếp theo chiều dọc */
   width: 20px;
   height: 20px;
-  margin: 0 5px;
-  padding: 0;
+  margin: 5px 0; /* Khoảng cách giữa các dots theo chiều dọc */
   cursor: pointer;
 }
 
 .slick-dots li button:before {
   font-family: 'slick';
-  font-size: 6px;
-  line-height: 20px;
-  position: absolute;
-  top: -383px;
-  left: 700px;
-  width: 88px;
-  height: 20px;
-  content: '•';
-  text-align: center;
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
   font-size: 1.6rem;
+  content: '•';
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Chỉnh kích thước và vị trí dots cho màn hình nhỏ */
+@media (max-width: 768px) {
+  .slick-dots {
+    right: 5px; /* Giảm khoảng cách dots so với cạnh phải */
+  }
+
+  .slick-dots li button:before {
+    font-size: 1.2rem; /* Giảm kích thước dots */
+  }
+}
+
+/* Chỉnh kích thước và vị trí dots cho màn hình lớn */
+@media (min-width: 769px) {
+  .slick-dots {
+    right: 10px; /* Khoảng cách dots so với cạnh phải ở màn hình lớn */
+  }
+
+  .slick-dots li button:before {
+    font-size: 1.6rem;
+  }
+}
+
 
 .ant-card-meta-title{
   white-space: normal !important;

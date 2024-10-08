@@ -12,7 +12,7 @@ const SliderProComponent = ({arrImages}) => {
     slidesToShow: 3,
     slidesToScroll: 1,
     speed: 500,
-    dots: false,
+    dots: true,
     arrows: false,
   };
   return (
