@@ -464,21 +464,41 @@ function AdminProduct() {
         
     }
 
+    // const handleTypeProdChange = async ({ fileList }) => {
+    //     if (!fileList.length) {
+    //         return; // No file to process
+    //     }
+    //     const file = fileList[0]
+    //     if (!file.url && !file.preview) {
+    //         file.preview = await getBase64(file.originFileObj)
+    //     }
+    //     setStateProduct({
+    //         ...stateProduct,
+    //         typeimage: file.preview
+    //     })
+        
+        
+    // }
+
     const handleTypeProdChange = async ({ fileList }) => {
         if (!fileList.length) {
-            return; // No file to process
+            return; // No files to process
         }
-        const file = fileList[0]
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj)
-        }
+    
+        // Duyệt qua tất cả file trong fileList
+        const previews = await Promise.all(fileList.map(async (file) => {
+            if (!file.url && !file.preview) {
+                file.preview = await getBase64(file.originFileObj);
+            }
+            return file.preview; // Trả về preview của file
+        }));
+    
         setStateProduct({
             ...stateProduct,
-            typeimage: file.preview
-        })
-        
-        
-    }
+            typeimage: previews // Lưu mảng chứa tất cả các ảnh
+        });
+    };
+    
 
     const handleAvatarChangeDetails = async ({ fileList }) => {
         if (!fileList.length) {
