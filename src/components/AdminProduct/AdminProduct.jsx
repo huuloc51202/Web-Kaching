@@ -402,6 +402,7 @@ function AdminProduct() {
             countInStock: stateProduct.countInStock,
             description: stateProduct.description,
         }
+        console.log('Param', params);
         mutation.mutate(params,{
             onSettled: () => {
                 queryProduct.refetch()
@@ -464,40 +465,44 @@ function AdminProduct() {
         
     }
 
-    // const handleTypeProdChange = async ({ fileList }) => {
+    // const handleAvatarChange = async ({ fileList }) => {
     //     if (!fileList.length) {
-    //         return; // No file to process
+    //         return; // Không có file nào để xử lý
     //     }
-    //     const file = fileList[0]
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await getBase64(file.originFileObj)
-    //     }
+    
+    //     // Duyệt qua tất cả các file trong fileList
+    //     const previews = await Promise.all(fileList.map(async (file) => {
+    //         if (!file.url && !file.preview) {
+    //             file.preview = await getBase64(file.originFileObj);
+    //         }
+    //         return file.preview; // Trả về preview của file
+    //     }));
+    
+    //     // Cập nhật state với mảng chứa tất cả các ảnh
     //     setStateProduct({
     //         ...stateProduct,
-    //         typeimage: file.preview
-    //     })
-        
-        
-    // }
+    //         image: previews, // Lưu mảng chứa tất cả các ảnh
+    //     });
+    // };
+    
 
     const handleTypeProdChange = async ({ fileList }) => {
         if (!fileList.length) {
-            return; // No files to process
+            return; // No file to process
         }
-    
-        // Duyệt qua tất cả file trong fileList
-        const previews = await Promise.all(fileList.map(async (file) => {
-            if (!file.url && !file.preview) {
-                file.preview = await getBase64(file.originFileObj);
-            }
-            return file.preview; // Trả về preview của file
-        }));
-    
+        const file = fileList[0]
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj)
+        }
         setStateProduct({
             ...stateProduct,
-            typeimage: previews // Lưu mảng chứa tất cả các ảnh
-        });
-    };
+            typeimage: file.preview
+        })
+        
+        
+    }
+
+    
     
 
     const handleAvatarChangeDetails = async ({ fileList }) => {

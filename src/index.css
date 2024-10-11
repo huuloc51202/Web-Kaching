@@ -13,6 +13,14 @@ html{
   font-family: 'Roboto', sans-serif;
 }
 
+
+
+@media (max-width: 503px) {
+  .slick-list{
+    height: 500px;
+  }
+}
+
 .slick-vertical .slick-slide{
   border: 0;
 }

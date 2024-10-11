@@ -8,6 +8,7 @@ import text1 from '../../assets/img/product/text1.jpeg'
 import heart1 from '../../assets/img/product/heart1.jpeg'
 import { useQuery } from '@tanstack/react-query';
 import * as ProductService from '../../services/PoductService'
+import { SliderImage } from './style';
 
 
 const SliderComponent = ({ arrImages }) => {
@@ -67,7 +68,7 @@ const SliderComponent = ({ arrImages }) => {
       <Slider ref={sliderRef} {...settings} >
         {arrImages.map((image, index) => (
           <div key={index} >
-            <Image key={image} src={image} alt={`slider-${index}`} preview={false} width="100%" />
+            <SliderImage key={image} src={image} alt={`slider-${index}`} preview={false} />
           </div>
         ))}
         {/* {products?.data?.map((product) => {
