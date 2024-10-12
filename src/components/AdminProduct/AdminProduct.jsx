@@ -23,7 +23,7 @@ function AdminProduct() {
     const searchInput = useRef(null);//tìm kiếm
     const inittial = () => ({
         name: '',
-        image: '',
+        image: [''],
         typeimage: '',
         type: '',
         price: '',
@@ -448,42 +448,48 @@ function AdminProduct() {
     };
 
 
-    const handleAvatarChange = async ({ fileList }) => {
-        if (!fileList.length) {
-            return; // No file to process
-        }
-        const file = fileList[0]
-        if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj)
-        }
-        setStateProduct({
-            ...stateProduct,
-            image: file.preview,
-            
-        })
-        
-        
-    }
-
     // const handleAvatarChange = async ({ fileList }) => {
     //     if (!fileList.length) {
-    //         return; // Không có file nào để xử lý
+    //         return; // No file to process
     //     }
-    
-    //     // Duyệt qua tất cả các file trong fileList
-    //     const previews = await Promise.all(fileList.map(async (file) => {
-    //         if (!file.url && !file.preview) {
-    //             file.preview = await getBase64(file.originFileObj);
-    //         }
-    //         return file.preview; // Trả về preview của file
-    //     }));
-    
-    //     // Cập nhật state với mảng chứa tất cả các ảnh
+    //     const file = fileList[0]
+    //     if (!file.url && !file.preview) {
+    //         file.preview = await getBase64(file.originFileObj)
+    //     }
     //     setStateProduct({
     //         ...stateProduct,
-    //         image: previews, // Lưu mảng chứa tất cả các ảnh
-    //     });
-    // };
+    //         image: file.preview,
+            
+    //     })
+        
+        
+    // }
+
+    // Hàm xử lý khi thay đổi hình ảnh
+    const handleAvatarChange = async ({ fileList }) => {
+        if (!fileList.length) {
+            return; // Không có file nào được tải lên
+        }
+
+        // Duyệt qua tất cả các tệp trong fileList và tạo preview
+        const previews = await Promise.all(
+            fileList.map(async (file) => {
+                if (!file.url && !file.preview) {
+                    file.preview = await getBase64(file.originFileObj);
+                }
+                return file.preview; // Trả về base64 của từng ảnh
+            })
+        );
+
+        // Cập nhật state để chứa tất cả các hình ảnh
+        setStateProduct({
+            ...stateProduct,
+            image: previews, // Lưu tất cả các ảnh base64 vào state
+        });
+    };
+
+    
+
     
 
     const handleTypeProdChange = async ({ fileList }) => {

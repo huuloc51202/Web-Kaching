@@ -37,29 +37,7 @@ const ProductDetailsComponent = ({idProduct}) => {
     const dispatch = useDispatch()
 
 
-    // slide chuyển ảnh
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const images = [prod1, prod2, prod3, prod4];
-
-    const updateImageByIndex = (index) => {
-        setCurrentIndex(index);
-    };
-
-    const handlePrevClick = () => {
-        if (currentIndex === 0) {
-            setCurrentIndex(images.length - 1);
-        } else {
-            setCurrentIndex(currentIndex - 1);
-        }
-    };
-
-    const handleNextClick = () => {
-        if (currentIndex === images.length - 1) {
-        setCurrentIndex(0);
-        } else {
-        setCurrentIndex(currentIndex + 1);
-        }
-    };
+    
 
     // Select size
 
@@ -110,6 +88,7 @@ const ProductDetailsComponent = ({idProduct}) => {
             setCartData(cart);
         }
     }, [user]);
+
     const handleAddOrderProduct = () => {
         if (!user?.id) {
             message.warning("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
@@ -118,12 +97,17 @@ const ProductDetailsComponent = ({idProduct}) => {
             // Nếu sản phẩm đã hết hàng hoặc chưa chọn kích thước, không thực hiện thêm sản phẩm
             return; // Có thể hiển thị thông báo hoặc xử lý lỗi ở đây nếu cần
         } else {
+            // Kiểm tra nếu sản phẩm có nhiều ảnh, chỉ lấy ảnh đại diện (ví dụ: ảnh đầu tiên)
+            const productImage = Array.isArray(productDetails?.image) 
+                ? productDetails?.image[0] // Lấy ảnh đầu tiên trong mảng nếu có nhiều ảnh
+                : productDetails?.image;    // Lấy ảnh duy nhất nếu chỉ có một ảnh
+    
             // Tạo đối tượng sản phẩm mới
             const newProduct = {
                 name: productDetails?.name,
                 size: selectedSize,
                 amount: quantity,
-                image: productDetails?.image,
+                image: productImage, // Sử dụng ảnh đã xử lý ở trên
                 price: productDetails?.price,
                 discount: productDetails?.discount,
                 product: productDetails?._id,
@@ -153,9 +137,23 @@ const ProductDetailsComponent = ({idProduct}) => {
     
             message.success("Sản phẩm đã được thêm vào giỏ hàng.");
         }
+    };    
+    
+    // slide chuyển ảnh
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const images = productDetails?.image || [];
+
+    const updateImageByIndex = (index) => {
+        setCurrentIndex(index);
     };
-    
-    
+
+    const handlePrevClick = () => {
+        setCurrentIndex(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
+    };
+
+    const handleNextClick = () => {
+        setCurrentIndex(currentIndex === images.length - 1 ? 0 : currentIndex + 1);
+    };
 
     
     return (
@@ -167,7 +165,10 @@ const ProductDetailsComponent = ({idProduct}) => {
                             <SliderProItem className="slider-pro__item">
                                 <a href="#" className="slider-pro__link">
                                     {/* src={images[currentIndex]} */}
-                                    <SliderProImg src={productDetails?.image} alt="" className="slider-pro__img" />
+                                    {/* src={productDetails?.image} */}
+                                    {images.length > 0 && (
+                                        <SliderProImg src={images[currentIndex]} alt={`Product Image ${currentIndex}`} className="slider-pro__img" />
+                                    )}
                                 </a>
 
                                 <Control className="control prev" style={{ left: '-59px' }} onClick={handlePrevClick}>
