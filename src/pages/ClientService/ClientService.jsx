@@ -36,9 +36,9 @@ const ClientService = () => {
                                             </span>
                                             <div className="cs-item-content">
                                                 <p style={{fontSize:'1.5rem',lineHeight:'1.5'}}>
-                                                    1. STRESSMAMA sẽ cho shipper đến địa chỉ quý khách lấy hàng, sau khi kiểm tra và sản phẩm đáp ứng đầy đủ tiêu chuẩn đổi hàng STRESSMAMA sẽ lên đơn gửi cho quý khách sản phẩm mới.<br></br>
+                                                    1. KACHING sẽ cho shipper đến địa chỉ quý khách lấy hàng, sau khi kiểm tra và sản phẩm đáp ứng đầy đủ tiêu chuẩn đổi hàng KACHING sẽ lên đơn gửi cho quý khách sản phẩm mới.<br></br>
                                                     2. Thời gian đổi hàng cho quy trình cơ bản sẽ dao động từ 3-4 ngày (nội thành) và từ 3-6 ngày (ngoại thành).<br></br>
-                                                    3. Đối với các trường hợp khách cần gấp, STRESSMAMA có thể hỗ trợ đổi 2 chiều với thời gian nhanh hơn nhưng quý khách vui lòng cọc 100% đơn hàng. Sau khi nhận được sản phẩm hoàn về và kiểm tra, STRESSMAMA sẽ hoàn tiền cọc lại cho quý khách. STRESSMAMA sẽ hoàn tiền vào THỨ 3 và THỨ 7 hàng tuần.<br></br>
+                                                    3. Đối với các trường hợp khách cần gấp, KACHING có thể hỗ trợ đổi 2 chiều với thời gian nhanh hơn nhưng quý khách vui lòng cọc 100% đơn hàng. Sau khi nhận được sản phẩm hoàn về và kiểm tra, KACHING sẽ hoàn tiền cọc lại cho quý khách. KACHING sẽ hoàn tiền vào THỨ 3 và THỨ 7 hàng tuần.<br></br>
                                                 </p>                                    
                                             </div>
                                         </li>
@@ -48,13 +48,13 @@ const ClientService = () => {
                                             </span>
                                             <div className="cs-item-content">
                                                 <p style={{fontSize:'1.5rem',lineHeight:'1.5'}}>
-                                                    1. Quý khách vui lòng kiểm tra kỹ sản phẩm cũng như size sản phẩm sau khi nhận được đơn hàng. STRESSMAMA sẽ chấp nhận các phản hồi và hỗ trợ đổi hàng trong vòng 5 ngày (tính từ ngày khách nhận được hàng).<br></br>
-                                                    2. Quý khách vui lòng quay clip unbox (Clip liền mạch không bị ngắt đoạn, cắt ghép hoặc bị che đi) để STRESSMAMA có thể xử lý đơn và đổi hàng nhanh hơn. Lưu ý: STRESSMAMA chỉ nhận đổi size.<br></br>
+                                                    1. Quý khách vui lòng kiểm tra kỹ sản phẩm cũng như size sản phẩm sau khi nhận được đơn hàng. KACHING sẽ chấp nhận các phản hồi và hỗ trợ đổi hàng trong vòng 5 ngày (tính từ ngày khách nhận được hàng).<br></br>
+                                                    2. Quý khách vui lòng quay clip unbox (Clip liền mạch không bị ngắt đoạn, cắt ghép hoặc bị che đi) để KACHING có thể xử lý đơn và đổi hàng nhanh hơn. Lưu ý: KACHING chỉ nhận đổi size.<br></br>
                                                     3. Đối với các sản phẩm đổi, quý khách vui lòng giữ nguyên trạng thái mới, đầy đủ tag, sản phẩm phải chưa qua giặt ủi, không có mùi lạ.<br></br>
-                                                    4. Đối với các trường hợp sản phẩm hết size để hỗ trợ đổi, STRESSMAMA có thể đổi sang sản phẩm khác (giá trị bằng hoặc cao hơn). Lưu ý: STRESSMAMA không hỗ trợ hoàn tiền.<br></br>
-                                                    5. Những lỗi xuất phát từ nhà sản xuất, STRESSMAMA sẽ chịu trách nhiệm 100% và hỗ trợ hoàn tiền nếu không tìm được phương án giải quyết khác.<br></br>
-                                                    6. STRESSMAMA chỉ nhận đổi hàng, không nhận trả hàng trong bất kỳ tình huống nào.<br></br>
-                                                    7. STRESSMAMA sẽ chịu hoàn toàn phí ship đổi hàng cho quý khách.<br></br>
+                                                    4. Đối với các trường hợp sản phẩm hết size để hỗ trợ đổi, KACHING có thể đổi sang sản phẩm khác (giá trị bằng hoặc cao hơn). Lưu ý: KACHING không hỗ trợ hoàn tiền.<br></br>
+                                                    5. Những lỗi xuất phát từ nhà sản xuất, KACHING sẽ chịu trách nhiệm 100% và hỗ trợ hoàn tiền nếu không tìm được phương án giải quyết khác.<br></br>
+                                                    6. KACHING chỉ nhận đổi hàng, không nhận trả hàng trong bất kỳ tình huống nào.<br></br>
+                                                    7. KACHING sẽ chịu hoàn toàn phí ship đổi hàng cho quý khách.<br></br>
                                                 </p>                                    
                                             </div>
                                         </li>

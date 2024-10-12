@@ -1,10 +1,11 @@
 import React from 'react'
+import { Section } from './style'
 
 const AboutUs = () => {
     return (
         <div>
             <div class="body-news" style={{marginTop:'60px'}}>
-                <section class="news-page "style={{marginRight:'132px',marginLeft:'132px',padding:'0 15px',textAlign:'center'}}>
+                <Section class="news-page "style={{}}>
                     <div class="product-list news-detail">
                         <div class="news-ctn" style={{paddingTop:'20px'}}>
                             <p class="news-item__title" style={{fontSize:'20px',fontWeight:'700',margin:'0 0 10px'}}>ABOUT US</p>
@@ -15,7 +16,7 @@ const AboutUs = () => {
                             </div>
                         </div>
                     </div>
-                </section>
+                </Section>
             </div>
         </div>
     )
