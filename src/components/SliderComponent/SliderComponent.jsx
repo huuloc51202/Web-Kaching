@@ -11,6 +11,7 @@ import * as ProductService from '../../services/PoductService'
 import { SliderImage } from './style';
 
 
+
 const SliderComponent = ({ arrImages }) => {
   const sliderRef = useRef(null);
   const containerRef = useRef(null);

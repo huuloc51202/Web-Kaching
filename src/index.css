@@ -16,7 +16,7 @@ html{
 
 
 @media (max-width: 503px) {
-  .slick-list{
+  .slick-vertical .slick-list{
     height: 500px;
   }
 }
