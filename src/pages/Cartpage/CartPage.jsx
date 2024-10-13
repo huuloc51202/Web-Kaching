@@ -310,7 +310,7 @@ const CartPage = () => {
                                         </div>
                                     </div>
                                 </ColTable>
-                                <Col  xs={24} sm={24} md={24} style={{marginLeft:'30px'}}>
+                                <Col  xs={24} sm={24} md={24} >
                                     <nav className="category">
                                         <div className="cart__total" style={{border:'1px solid #eee',margin:'20px 0'}}>
                                             <CategoryTotal className="category-total">

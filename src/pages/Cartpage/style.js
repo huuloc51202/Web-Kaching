@@ -7,7 +7,7 @@ export const Title = styled.h1`
     color: #000;
     margin: 0px 0px 30px 0px;
     font-weight: 500;
-
+    text-align: center;
 `
 export const TableHeading = styled.div`
     display: flex;

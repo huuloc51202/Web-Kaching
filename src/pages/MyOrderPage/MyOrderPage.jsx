@@ -128,7 +128,7 @@ const MyOrderPage = () => {
                                             
                                                 
                                             
-                                            <div className="section" style={{marginLeft:'35px'}}>
+                                            <div className="section" >
                                                 <div className="section-header">
                                                     <h2 className="section-title" style={{paddingBottom:'10px',borderBottom:'1px solid #000',margin:'0',textAlign:'center'}}>Đơn hàng của tôi</h2>
                                                 </div>

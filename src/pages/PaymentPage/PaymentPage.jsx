@@ -288,7 +288,7 @@ const PaymentPage = () => {
                                         
                                             
                                         
-                                        <div className="section" style={{marginLeft:'35px'}}>
+                                        <div className="section">
                                             <div className="section-header">
                                                 <h2 className="section-title" style={{paddingBottom:'10px',borderBottom:'1px solid #000',margin:'0'}}>Thông tin giao hàng</h2>
                                             </div>
@@ -297,7 +297,7 @@ const PaymentPage = () => {
                                                 
                                                 
                                                 <Fieldset >
-                                                    <span>Lưu ý : Muốn thay đổi thông tin , khách hàng hãy ấn nút thay đổi bên tay phải màn hình nhé :3 </span>
+                                                    <span>Lưu ý : Muốn thay đổi thông tin , khách hàng hãy ấn nút thay đổi  nhé :3 </span>
                                                     <div className="field field-required">
                                                         <FieldInputWrapper >
                                                             <FieldInput placeholder="Họ và tên"  size="30" type="text" id="billing_address_full_name" name="name" value={user?.name} />
