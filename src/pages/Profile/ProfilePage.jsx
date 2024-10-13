@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
-import { InputForm, WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel, WrapperUploadFile } from './style'
+import { InputForm, ProfileWrapper, WrapperContentProfile, WrapperHeader, WrapperInput, WrapperLabel, WrapperUploadFile } from './style'
 import * as UserService from '../../services/UserService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
 import * as message from '../../components/Message/Message'
@@ -79,14 +79,14 @@ const ProfilePage = () => {
         mutation.mutate({ id: user?.id, email,phone, name, address, avatar, access_token: user?.access_token})
     }
     return (
-        <div style={{ width:'1270px', margin: '60px auto 0', height:'500px'}}> 
+        <ProfileWrapper> 
             <WrapperHeader>Thông tin cá nhân</WrapperHeader>
             <Loading isPending={mutation.isPending}>
 
                 <WrapperContentProfile>
                     <WrapperInput>
                         <WrapperLabel htmlFor='email'>Email</WrapperLabel>
-                        <InputForm style={{width:'300px'}} id="email" value={email} onChange={handleEmailChange} placeholder='Email người dùng'/>
+                        <InputForm  id="email" value={email} onChange={handleEmailChange} placeholder='Email người dùng'/>
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
@@ -103,7 +103,7 @@ const ProfilePage = () => {
                     </WrapperInput>
                     <WrapperInput>
                         <WrapperLabel htmlFor='name'>Name</WrapperLabel>
-                        <InputForm style={{width:'300px'}} id="name" value={name} onChange={handleNameChange} placeholder='Tên người dùng'/>
+                        <InputForm  id="name" value={name} onChange={handleNameChange} placeholder='Tên người dùng'/>
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
@@ -120,7 +120,7 @@ const ProfilePage = () => {
                     </WrapperInput>
                     <WrapperInput>
                         <WrapperLabel htmlFor='phone'>Phone</WrapperLabel>
-                        <InputForm style={{width:'300px'}} id="phone" value={phone} onChange={handlePhoneChange} placeholder='Số điện thoại'/>
+                        <InputForm  id="phone" value={phone} onChange={handlePhoneChange} placeholder='Số điện thoại'/>
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
@@ -137,7 +137,7 @@ const ProfilePage = () => {
                     </WrapperInput>
                     <WrapperInput>
                         <WrapperLabel htmlFor='address'>Address</WrapperLabel>
-                        <InputForm style={{width:'300px'}} id="address" value={address} onChange={handleAddressChange} placeholder='Địa chỉ'/>
+                        <InputForm  id="address" value={address} onChange={handleAddressChange} placeholder='Địa chỉ'/>
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
@@ -160,7 +160,7 @@ const ProfilePage = () => {
                         {avatar && (
                             <img src={avatar} style={{height:'60px',width:'60px', borderRadius:'50%',objectFit:'cover'}} alt="avatar"/>
                         )}
-                        {/* <InputForm style={{width:'300px'}} id="avatar" value={avatar} onChange={handleAvatarChange} placeholder='Địa chỉ'/> */}
+                        {/* <InputForm  id="avatar" value={avatar} onChange={handleAvatarChange} placeholder='Địa chỉ'/> */}
                         <ButtonComponent
                             onClick={handleUpdate}
                             size={40}
@@ -177,7 +177,7 @@ const ProfilePage = () => {
                     </WrapperInput>
                 </WrapperContentProfile>
             </Loading>
-        </div>
+        </ProfileWrapper>
     )
 }
 

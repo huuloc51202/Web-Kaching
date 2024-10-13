@@ -20,16 +20,21 @@ const TypeProductsPage = () => {
     limit:10,
     total:1,
   })
-  const fetchProductType =async (type,page,limit) => {
-    const res = await ProductService.getProductType(type, page, limit)
-    if(res?.status === 'OK'){
-      setLoading(false)
-      setProducts(res?.data)
-      setPaginate({...paginate, total: res?.totalPage})
-    }else{
-      setLoading(false)
+  const fetchProductType = async (type, page, limit) => {
+    setLoading(true); // Bắt đầu trạng thái loading
+    try {
+      const res = await ProductService.getProductType(type, page, limit);
+      if (res?.status === 'OK') {
+        setProducts(res?.data); // Lấy dữ liệu sản phẩm
+        setPaginate({ ...paginate, total: res?.totalPage }); // Cập nhật số trang
+      }
+    } catch (error) {
+      console.error("Lỗi khi fetch dữ liệu:", error); // Log lỗi
+    } finally {
+      setLoading(false); // Kết thúc loading, dù thành công hay gặp lỗi
     }
-  }
+  };
+
 
   useEffect(() => {
     if(state){
@@ -38,9 +43,11 @@ const TypeProductsPage = () => {
     
   },[state])
 
-  const onChange = (current,pageSize) => {
-    setPaginate({...paginate,page: current - 1,limit: pageSize})
-  }
+  const onChange = (current, pageSize) => {
+    setPaginate({ ...paginate, page: current - 1, limit: pageSize });
+    fetchProductType(state, current - 1, pageSize); // Gọi lại API để lấy dữ liệu sản phẩm mới theo trang
+  };
+
   
   return (
     <div style={{marginTop:'68px'}}  >
@@ -72,7 +79,13 @@ const TypeProductsPage = () => {
           })}
           
         </Row>
-        <Pagination defaultCurrent={paginate?.page + 1} total={paginate?.total} onChange={onChange} style={{textAlign:'center',padding:'20px 0'}}/>
+        <Pagination 
+          defaultCurrent={paginate?.page + 1} 
+          total={paginate?.total * paginate?.limit} // Tổng số sản phẩm để hiển thị đúng số trang
+          onChange={onChange} 
+          style={{textAlign:'center', padding:'20px 0'}} 
+        />
+
       </Loading>
     </div>
   )

@@ -10,6 +10,11 @@ const TableComponent = (props) => {
     pageSize: 5, 
     total: dataSource.length,
   });
+  const paginatedData = useMemo(() => {
+    const startIndex = (pagination.current - 1) * pagination.pageSize;
+    const endIndex = startIndex + pagination.pageSize;
+    return dataSource.slice(startIndex, endIndex);
+  }, [pagination, dataSource]);  
   const newColumnExport = useMemo(() => {
     const arr =  columns?.filter((col) => col.dataIndex !== 'action')
     return arr
@@ -70,7 +75,7 @@ const TableComponent = (props) => {
         ...rowSelection,
         }}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={paginatedData}
         pagination={pagination} 
         onChange={handleTableChange} 
         {...props}

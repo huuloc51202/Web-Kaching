@@ -11,8 +11,7 @@ import Loading from '../../components/LoadingComponent/Loading'
 const ProductsPage = () => {
     const searchProduct = useSelector((state) => state?.product?.search)
     const searchDebounce = useDebounce(searchProduct,  500)
-    const [limit,setLimit] = useState(12)
-    const [currentPage, setCurrentPage] = useState(1)
+    
   
     const fetchProductAll = async (context) =>{
       const limit = context?.queryKey && context?.queryKey[1]
@@ -23,15 +22,15 @@ const ProductsPage = () => {
     }
   
     const {isLoading, data: products} = useQuery({
-      queryKey: ['products',limit, currentPage,searchDebounce],
+      queryKey: ['products', searchDebounce],
       queryFn: fetchProductAll,
       retry: 3,
       retryDelay: 1000,
     })
 
-    const handlePageChange = (page) => {
-      setCurrentPage(page);
-    };
+    // const handlePageChange = (page) => {
+    //   setCurrentPage(page);
+    // };
 
   
     
@@ -61,13 +60,13 @@ const ProductsPage = () => {
             {/* <CardComponent arrImages={[prod1, juicypink1]} /> */}
           </Row>
         </Loading>
-        <Pagination
+        {/* <Pagination
           current={currentPage}
           pageSize={limit}
           total={products?.total}
           onChange={handlePageChange}
           style={{ textAlign: 'center', padding: '20px 0' }}
-        />
+        /> */}
       </div>
     )
   }

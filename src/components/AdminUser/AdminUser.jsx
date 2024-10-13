@@ -12,6 +12,7 @@ import { useMutationHooks } from '../../hooks/useMutationHook'
 import { useQuery } from '@tanstack/react-query'
 import * as message from '../Message/Message'
 import * as UserService from '../../services/UserService'
+import Loading from '../LoadingComponent/Loading'
 
 const AdminUser = () => {
     const [rowSelected, setRowSelected] = useState('')
@@ -140,7 +141,7 @@ const AdminUser = () => {
     const {data: dataDelete, isSuccess: isSuccessDelete, isError: isErrorDelete} = mutationDeleted
     const {data: dataDeleteMany, isSuccess: isSuccessDeleteMany, isError: isErrorDeleteMany} = mutationDeletedMany
     const queryUser = useQuery({queryKey: ['users'],queryFn:getAllUsers })
-    const {data : users} = queryUser
+    const {isLoading,data : users} = queryUser
     const renderAction = () => {
         return (
             <div>
@@ -364,15 +365,17 @@ const AdminUser = () => {
             <WrapperHeader>Quản lí người dùng</WrapperHeader>
             
             <div style={{ marginTop: '20px', paddingLeft: '15px' }}>
+                <Loading isPending={isLoading}>
 
-                <TableComponent handleDeleteMany={handleDeleteManyUsers} columns={columns} data={dataTable} onRow={(record, rowIndex) => {
-                    return {
-                        onClick: event => {
-                            setRowSelected(record._id)
-                        }
-                    };
-                }}
-                />
+                    <TableComponent handleDeleteMany={handleDeleteManyUsers} columns={columns} data={dataTable} onRow={(record, rowIndex) => {
+                            return {
+                                onClick: event => {
+                                    setRowSelected(record._id)
+                                }
+                            };
+                        }}
+                    />
+                </Loading>
             </div>
             
             <DrawerComponent title='Chi tiết người dùng' isOpen={isOpenDrawer} onCancel={handleCloseDrawer} onClose={() => setIsOpenDrawer(false)} width='50%'>

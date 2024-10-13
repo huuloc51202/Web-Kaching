@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import DrawerComponent from '../DrawerComponent/DrawerComponent'
 import { useSelector } from 'react-redux'
 import ModalComponent from '../ModalComponent/ModalComponent'
+import Loading from '../LoadingComponent/Loading'
 
 function AdminProduct() {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -184,7 +185,7 @@ function AdminProduct() {
     const {data: dataDeleteMany, isSuccess: isSuccessDeleteMany, isError: isErrorDeleteMany} = mutationDeletedMany
     const queryProduct = useQuery({queryKey: ['products'],queryFn:getAllProducts })
     const typeProduct = useQuery({queryKey: ['type-product'],queryFn:fetchAllTypeProduct })
-    const {data : products} = queryProduct
+    const {isLoading,data : products} = queryProduct
     const renderAction = () => {
         return (
             <div>
@@ -448,22 +449,7 @@ function AdminProduct() {
     };
 
 
-    // const handleAvatarChange = async ({ fileList }) => {
-    //     if (!fileList.length) {
-    //         return; // No file to process
-    //     }
-    //     const file = fileList[0]
-    //     if (!file.url && !file.preview) {
-    //         file.preview = await getBase64(file.originFileObj)
-    //     }
-    //     setStateProduct({
-    //         ...stateProduct,
-    //         image: file.preview,
-            
-    //     })
-        
-        
-    // }
+    
 
     // Hàm xử lý khi thay đổi hình ảnh
     const handleAvatarChange = async ({ fileList }) => {
@@ -553,15 +539,17 @@ function AdminProduct() {
 
             </div>
             <div style={{ marginTop: '20px', paddingLeft: '15px' }}>
+                <Loading isPending={isLoading}>
 
-                <TableComponent handleDeleteMany={handleDeleteManyProducts} columns={columns} data={dataTable} onRow={(record, rowIndex) => {
-                    return {
-                        onClick: event => {
-                            setRowSelected(record._id)
-                        }
-                    };
-                }}
-                />
+                    <TableComponent handleDeleteMany={handleDeleteManyProducts} columns={columns} data={dataTable} onRow={(record, rowIndex) => {
+                            return {
+                                onClick: event => {
+                                    setRowSelected(record._id)
+                                }
+                            };
+                        }}
+                    />
+                </Loading>
             </div>
             <ModalComponent forceRender title="Tạo sản phẩm" open={isModalOpen} onCancel={handleCancel} okButtonProps={{ style: { display: 'none' } }} footer={null}>
                 <Form
