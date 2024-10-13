@@ -7,7 +7,15 @@ export const Title = styled.h1`
     color: #000;
     margin: 0px 0px 30px 0px;
     font-weight: 500;
+    @media (max-width: 503px){
+        text-align:center;
+    }
+`
 
+export const SectionHeader = styled.div`
+    @media (max-width: 503px){
+        text-align:center;
+    }
 `
 
 export const CategoryTotal = styled.div`

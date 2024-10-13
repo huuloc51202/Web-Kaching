@@ -1,6 +1,6 @@
 import {  Col, Form, message } from 'antd'
 import React, { useEffect, useMemo, useState } from 'react'
-import { ButtonTotal, CategoryTotal, FieldInput, FieldInputWrapper, Fieldset, PayTotal,PayTotal2,ProductCart,RadioContentInput,RadioWrapper,Title } from './style'
+import { ButtonTotal, CategoryTotal, FieldInput, FieldInputWrapper, Fieldset, PayTotal,PayTotal2,ProductCart,RadioContentInput,RadioWrapper,SectionHeader,Title } from './style'
 import {
     DeleteOutlined
 } from '@ant-design/icons';
@@ -289,9 +289,9 @@ const PaymentPage = () => {
                                             
                                         
                                         <div className="section">
-                                            <div className="section-header">
+                                            <SectionHeader className="section-header">
                                                 <h2 className="section-title" style={{paddingBottom:'10px',borderBottom:'1px solid #000',margin:'0'}}>Thông tin giao hàng</h2>
-                                            </div>
+                                            </SectionHeader>
                                             <div className="section-content ">
                                                 
                                                 
@@ -338,16 +338,16 @@ const PaymentPage = () => {
 
                                             
                                                 
-                                            <div id="change_pick_location_or_shipping">
+                                            <div id="change_pick_location_or_shipping" style={{marginTop:'7px'}}>
                             
                                                     
                                                 <div id="section-payment-method" className="section">
                                                     {/* <div className="order-checkout__loading--box">
                                                         <div className="order-checkout__loading--circle"></div>  
                                                     </div> */}
-                                                    <div className="section-header">
+                                                    <sectionHeader className="section-header">
                                                         <h2 className="section-title">Phương thức thanh toán</h2>
-                                                    </div>
+                                                    </sectionHeader>
 
                                                     <div className="section-content" style={{display: 'flex', justifyContent: 'center'}}>
                                                         <div className="contentbox" style={{border: '1px solid'}}>
