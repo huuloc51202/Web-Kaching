@@ -345,9 +345,9 @@ const PaymentPage = () => {
                                                     {/* <div className="order-checkout__loading--box">
                                                         <div className="order-checkout__loading--circle"></div>  
                                                     </div> */}
-                                                    <sectionHeader className="section-header">
+                                                    <SectionHeader className="section-header">
                                                         <h2 className="section-title">Phương thức thanh toán</h2>
-                                                    </sectionHeader>
+                                                    </SectionHeader>
 
                                                     <div className="section-content" style={{display: 'flex', justifyContent: 'center'}}>
                                                         <div className="contentbox" style={{border: '1px solid'}}>
