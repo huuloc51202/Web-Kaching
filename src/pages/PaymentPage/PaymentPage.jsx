@@ -92,7 +92,7 @@ const PaymentPage = () => {
 
     // Phí Ship
     const diliveryPriceMemo = useMemo(() => {
-        if(priceMemo > 280000){
+        if(priceMemo >= 280000){
             return 0
         }else if(priceMemo === 0){
             return  0
